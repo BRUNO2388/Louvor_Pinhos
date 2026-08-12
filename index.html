@@ -477,7 +477,7 @@
       </div>
     </div>
 
-    <!-- ABA 2: CADASTRO SIMPLIFICADO DE MEMBROS (Apenas Nome) -->
+    <!-- ABA 2: CADASTRO DE MEMBROS -->
     <div id="tab-membros" class="tab-content no-print">
       <h2>Cadastrar Integrante no Louvor</h2>
       <div style="margin-bottom: 10px;">
@@ -524,20 +524,14 @@
       carregarChamadaDoDia();
     });
 
-    // Escutar membros cadastrados
-    onValue(ref(db, 'louvor_app/membros'), (snapshot) => {
+    // Escutar membros cadastrados no banco
+    onValue(ref(db, 'membros_louvor'), (snapshot) => {
       window.integrantesCadastrados = snapshot.val() || {};
       renderizarListaCadastrados();
     });
   </script>
 
   <script>
-    const MEMBROS_FIXOS_PADRAO = [
-      "Aline", "Andressa", "Arimatéia", "Bruno", "Edilene", "Gessé", "Guilherme",
-      "Jaqueline", "Joan", "Josué", "Junior", "Khayan", "Lucilene",
-      "Marcela", "Priscila", "Raquel", "Rita", "Sabrina", "Simone Poppe", "Tatiana"
-    ];
-
     let statusSelecionado = 'presente';
     let tipoRelatorioAtual = 'diario';
     window.todosOsDados = {};
@@ -584,8 +578,7 @@
     }
 
     function getListaMembrosCompleta() {
-      const cadastrados = Object.values(window.integrantesCadastrados).map(m => m.nome);
-      return Array.from(new Set([...MEMBROS_FIXOS_PADRAO, ...cadastrados]));
+      return Object.values(window.integrantesCadastrados).map(m => m.nome);
     }
 
     function buscarSugestoes() {
@@ -602,7 +595,7 @@
           `<div class="suggestion-item" onclick="selecionarSugestao('${nome}')">${nome}</div>`
         ).join('');
       } else {
-        divSugestoes.innerHTML = `<div class="suggestion-item" style="color:#888;">Clique em adicionar para incluir novo nome</div>`;
+        divSugestoes.innerHTML = `<div class="suggestion-item" style="color:#888;">Cadastre o nome na aba "Cadastrar Membros"</div>`;
       }
       divSugestoes.style.display = 'block';
     }
@@ -815,21 +808,22 @@
       }
     }
 
-    // CADASTRO DE MEMBROS (Apenas Nome)
+    // CADASTRO DE MEMBROS
     function cadastrarMembro() {
       const nome = document.getElementById('novo-nome').value.trim();
       if (!nome) { alert('Digite o nome do integrante!'); return; }
 
       const id = nome.replace(/[.#$\[\]]/g, "_");
-      window.dbSet(window.dbRef(window.db, `louvor_app/membros/${id}`), { nome });
-
-      document.getElementById('novo-nome').value = '';
-      renderizarListaCadastrados();
+      if (window.db && window.dbSet) {
+        window.dbSet(window.dbRef(window.db, `membros_louvor/${id}`), { nome: nome }).then(() => {
+          document.getElementById('novo-nome').value = '';
+        });
+      }
     }
 
     function removerMembroCadastrado(id, nome) {
       if (confirm(`Deseja remover ${nome} do cadastro?`)) {
-        window.dbRemove(window.dbRef(window.db, `louvor_app/membros/${id}`));
+        window.dbRemove(window.dbRef(window.db, `membros_louvor/${id}`));
       }
     }
 
@@ -839,7 +833,7 @@
       document.getElementById('total-membros-badge').innerText = `Total: ${chaves.length}`;
 
       if (chaves.length === 0) {
-        div.innerHTML = '<p style="color:#888; text-align:center; padding:10px;">Nenhum integrante cadastrado manualmente ainda.</p>';
+        div.innerHTML = '<p style="color:#888; text-align:center; padding:10px;">Nenhum integrante cadastrado ainda.</p>';
         return;
       }
 
