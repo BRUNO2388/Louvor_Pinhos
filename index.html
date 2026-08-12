@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Grupo de Louvor ICM PINHOS</title>
+
+  <!-- Configurações PWA / App para Celular -->
+  <meta name="theme-color" content="#2d6a4f">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Louvor PINHOS">
+  <meta name="application-name" content="Louvor PINHOS">
+
+  <!-- Ícone SVG direto no HTML -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23f2ece1'/><text x='50%' y='40%' font-family='serif' font-style='italic' font-weight='bold' font-size='22' fill='%23b81d24' text-anchor='middle'>ICM</text><text x='50%' y='70%' font-family='serif' font-style='italic' font-weight='bold' font-size='18' fill='%23b81d24' text-anchor='middle'>PINHOS</text></svg>">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23f2ece1'/><text x='50%' y='40%' font-family='serif' font-style='italic' font-weight='bold' font-size='22' fill='%23b81d24' text-anchor='middle'>ICM</text><text x='50%' y='70%' font-family='serif' font-style='italic' font-weight='bold' font-size='18' fill='%23b81d24' text-anchor='middle'>PINHOS</text></svg>">
+
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Biblioteca para converter HTML em Imagem para o WhatsApp -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Playfair+Display:ital,wght@1,600;1,800&display=swap');
+
+    :root {
+      --bg-body: #f4f6f9;
+      --bg-container: #ffffff;
+      --text-main: #333333;
+      --border-color: #ccc;
+      --card-bg: #f8f9fa;
+      --logo-box-bg: #f3efe6;
+      --logo-box-border: #e2dad0;
+    }
+
+    body.dark-mode {
+      --bg-body: #121212;
+      --bg-container: #1e1e1e;
+      --text-main: #e0e0e0;
+      --border-color: #444444;
+      --card-bg: #2a2a2a;
+      --logo-box-bg: #282420;
+      --logo-box-border: #443c34;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      padding: 15px;
+      display: flex;
+      justify-content: center;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 580px;
+      background: var(--bg-container);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      position: relative;
+    }
+
+    /* BOTÃO MODO ESCURO / CLARO */
+    .theme-toggle-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 10;
+    }
+
+    /* NAV TABS */
+    .nav-tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #2d6a4f;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 10px 6px;
+      border: none;
+      background: var(--card-bg);
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 0.88rem;
+      border-radius: 6px 6px 0 0;
+      color: var(--text-main);
+      white-space: nowrap;
+    }
+
+    .tab-btn.active {
+      background: #2d6a4f;
+      color: white;
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* ESTILIZAÇÃO DO LOGO ICM PINHOS */
+    .logo-box {
+      background-color: var(--logo-box-bg);
+      border-radius: 12px;
+      padding: 20px 15px;
+      text-align: center;
+      position: relative;
+      margin-bottom: 20px;
+      box-shadow: inset 0 0 15px rgba(0,0,0,0.05);
+      border: 1px solid var(--logo-box-border);
+    }
+
+    .note-icon {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      opacity: 0.6;
+    }
+
+    .note-top-left { top: 10px; left: 10px; }
+    .note-bottom-right { bottom: 10px; right: 10px; }
+
+    .logo-im {
+      font-family: 'Caveat', cursive;
+      font-size: 3.5rem;
+      color: #b81d24;
+      line-height: 0.8;
+      margin-bottom: 5px;
+    }
+
+    .logo-text {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      color: #b81d24;
+      line-height: 1.25;
+    }
+
+    .logo-text .line1 { font-size: 1.4rem; font-weight: 600; }
+    .logo-text .line2 { font-size: 1.6rem; font-weight: 800; letter-spacing: 1px; }
+    .logo-text .line3 { font-size: 1.4rem; font-weight: 800; letter-spacing: 2px; }
+
+    h2 {
+      font-size: 1rem;
+      color: #2d6a4f;
+      border-bottom: 2px solid #2d6a4f;
+      padding-bottom: 5px;
+      margin-top: 15px;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .section { margin-bottom: 20px; }
+
+    label {
+      font-size: 0.85rem;
+      font-weight: bold;
+      color: #2d6a4f;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="date"], input[type="month"], input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-container);
+      color: var(--text-main);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .search-container {
+      position: relative;
+      margin-bottom: 10px;
+    }
+
+    .suggestions-list {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--bg-container);
+      border: 1px solid #2d6a4f;
+      border-radius: 0 0 8px 8px;
+      max-height: 180px;
+      overflow-y: auto;
+      z-index: 1000;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      display: none;
+    }
+
+    .suggestion-item {
+      padding: 10px;
+      cursor: pointer;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.9rem;
+      color: var(--text-main);
+    }
+
+    .suggestion-item:hover {
+      background-color: #e8f5e9;
+      color: #1b4332;
+      font-weight: bold;
+    }
+
+    .status-selector {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .status-btn {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      background: var(--card-bg);
+      color: var(--text-main);
+      cursor: pointer;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: bold;
+    }
+
+    .status-btn.selected-p { background-color: #d4edda; border-color: #28a745; color: #155724; }
+    .status-btn.selected-a { background-color: #fff3cd; border-color: #ffc107; color: #856404; }
+    .status-btn.selected-f { background-color: #f8d7da; border-color: #dc3545; color: #721c24; }
+
+    button.btn-main {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      background-color: #2d6a4f;
+      color: white;
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+    }
+
+    button.btn-main:hover { background-color: #1b4332; }
+    .btn-wsp { background-color: #25d366 !important; color: #fff !important; }
+    .btn-img { background-color: #007bff !important; color: #fff !important; }
+    .btn-pdf { background-color: #6c757d !important; color: #fff !important; }
+
+    .member-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 12px;
+      background: var(--card-bg);
+      color: var(--text-main);
+      border-left: 5px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+
+    .card-p { border-left-color: #28a745; }
+    .card-a { border-left-color: #ffc107; }
+    .card-f { border-left-color: #dc3545; }
+
+    .tag-status {
+      font-size: 0.75rem;
+      font-weight: bold;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .tag-p { background: #d4edda; color: #155724; }
+    .tag-a { background: #fff3cd; color: #856404; }
+    .tag-f { background: #dc3545; color: #ffffff; }
+
+    .btn-del {
+      background: none;
+      border: none;
+      color: #dc3545;
+      font-weight: bold;
+      cursor: pointer;
+      margin-left: 8px;
+      font-size: 1rem;
+    }
+
+    .counter-bar {
+      display: flex;
+      justify-content: space-around;
+      background: var(--card-bg);
+      padding: 8px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      margin-bottom: 12px;
+      border: 1px solid var(--border-color);
+    }
+
+    .member-manage-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 8px; border-bottom: 1px solid var(--border-color); gap: 10px; }
+    .member-manage-info { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+    .member-manage-name { font-size: 0.92rem; font-weight: 700; word-break: break-word; line-height: 1.25; }
+
+    /* ESTILO DA FOLHA DE PAPEL TIMBRADA PARA IMPRESSÃO/IMAGEM */
+    .paper-sheet {
+      background: #ffffff !important;
+      color: #333333 !important;
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      margin-top: 15px;
+    }
+
+    .paper-title {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #1b4332;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 5px;
+    }
+
+    .report-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 0.85rem;
+      background: #ffffff;
+    }
+
+    .report-table th, .report-table td {
+      border: 1px solid #b8c2cc;
+      padding: 8px;
+      text-align: left;
+      color: #333333;
+    }
+
+    .report-table th { background-color: #2d6a4f; color: white; }
+
+    /* DESTAQUE DE CORES NA TABELA TIMBRADA */
+    .row-presente { background-color: #e8f5e9; color: #155724; }
+    .row-atrasado { background-color: #fff8e1; color: #856404; font-weight: bold; }
+    .row-ausente  { background-color: #ffeef0; color: #721c24; font-weight: bold; }
+
+    @media print {
+      .no-print, .theme-toggle-btn { display: none !important; }
+      body { background: #fff; padding: 0; }
+      .container { box-shadow: none; width: 100%; max-width: 100%; padding: 0; }
+      .paper-sheet { border: none; box-shadow: none; padding: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- BOTÃO MODO ESCURO / CLARO -->
+    <button class="theme-toggle-btn no-print" onclick="alternarTema()">
+      <span id="theme-icon">🌙</span> <span id="theme-text">Escuro</span>
+    </button>
+
+    <!-- CABEÇALHO COM LOGO -->
+    <div class="logo-box">
+      <svg class="note-icon note-top-left" viewBox="0 0 100 100">
+        <path d="M 30 70 A 10 10 0 1 1 30 50 L 70 30 L 70 60 A 10 10 0 1 1 70 40 L 70 30 L 30 50 Z" fill="none" stroke="#555" stroke-width="4"/>
+      </svg>
+      <div class="logo-im">im</div>
+      <div class="logo-text">
+        <div class="line1">Grupo de Louvor</div>
+        <div class="line2">ICM</div>
+        <div class="line3">PINHOS</div>
+      </div>
+      <svg class="note-icon note-bottom-right" viewBox="0 0 100 100">
+        <path d="M 30 70 A 10 10 0 1 1 30 50 L 70 30 L 70 60 A 10 10 0 1 1 70 40 L 70 30 L 30 50 Z" fill="none" stroke="#555" stroke-width="4"/>
+      </svg>
+    </div>
+
+    <!-- NAVEGAÇÃO POR ABAS -->
+    <div class="nav-tabs no-print">
+      <button class="tab-btn active" onclick="alternarAba('ensaio')">📝 Chamada Ensaio</button>
+      <button class="tab-btn" onclick="alternarAba('membros')">👥 Cadastrar Membros</button>
+    </div>
+
+    <!-- ABA 1: CHAMADA E RELATÓRIO DE ENSAIO -->
+    <div id="tab-ensaio" class="tab-content active">
+      <!-- Data da Chamada -->
+      <div class="section">
+        <label for="ensaio-data">Data do Ensaio (Histórico / Chamada):</label>
+        <input type="date" id="ensaio-data" onchange="carregarChamadaDoDia()">
+      </div>
+
+      <!-- Marcar Presença -->
+      <div class="section no-print">
+        <h2>Marcar Presença no Ensaio</h2>
+
+        <div class="search-container">
+          <input type="text" id="input-busca" placeholder="Digite o nome..." oninput="buscarSugestoes()" autocomplete="off">
+          <div id="sugestoes" class="suggestions-list"></div>
+        </div>
+
+        <div class="status-selector">
+          <label class="status-btn selected-p" id="lbl-p" onclick="selecionarOpcao('presente')">Presente</label>
+          <label class="status-btn" id="lbl-a" onclick="selecionarOpcao('atrasado')">Atrasado</label>
+          <label class="status-btn" id="lbl-f" onclick="selecionarOpcao('ausente')">Faltou</label>
+        </div>
+
+        <button class="btn-main" onclick="adicionarEAutoSalvar()">➕ Adicionar (Salva no Firebase)</button>
+      </div>
+
+      <!-- Chamada do Dia (Lista de Edição rápida) -->
+      <div class="section no-print">
+        <h2>Registro do Dia Selecionado</h2>
+
+        <div class="counter-bar">
+          <span style="color: #28a745;">P: <span id="cnt-p">0</span></span>
+          <span style="color: #856404;">A: <span id="cnt-a">0</span></span>
+          <span style="color: #dc3545; font-weight: bold;">F: <span id="cnt-f">0</span></span>
+        </div>
+
+        <div id="lista-chamada">
+          <p style="text-align: center; color: #888; font-size: 0.85rem;">Carregando...</p>
+        </div>
+      </div>
+
+      <!-- SEÇÃO DE RELATÓRIO TIMBRADO -->
+      <div class="section">
+        <h2>Gerar Relatório em Folha Timbrada</h2>
+
+        <div style="display:flex; gap:8px; margin-bottom: 10px;" class="no-print">
+          <input type="month" id="mes-relatorio">
+          <button class="btn-main" style="width: auto;" onclick="gerarRelatorioMensal()">Relatório Mensal</button>
+        </div>
+
+        <div class="no-print" style="margin-bottom: 15px;">
+          <button class="btn-main btn-img" onclick="gerarImagemECompartilhar()">📲 Compartilhar Imagem no WhatsApp</button>
+          <button class="btn-main btn-wsp" onclick="enviarTextoWhatsApp()">💬 Enviar Texto Simples no WhatsApp</button>
+          <button class="btn-main btn-pdf" onclick="window.print()">🖨️ Imprimir / PDF</button>
+        </div>
+
+        <!-- FOLHA TIMBRADA IMPRESSA / EXPORTÁVEL -->
+        <div id="folha-timbrada" class="paper-sheet">
+          <div style="text-align:center; border-bottom: 2px solid #b81d24; padding-bottom: 10px; margin-bottom: 15px;">
+            <div style="font-family:'Caveat', cursive; font-size:2.2rem; color:#b81d24; line-height:0.8;">im</div>
+            <div style="font-family:'Playfair Display', serif; font-style:italic; color:#b81d24; font-size:1.1rem; font-weight:bold;">
+              Grupo de Louvor ICM PINHOS
+            </div>
+          </div>
+
+          <div id="conteudo-folha">
+            <!-- O conteúdo diário ou mensal entra aqui formatado -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABA 2: CADASTRO SIMPLIFICADO DE MEMBROS (Apenas Nome) -->
+    <div id="tab-membros" class="tab-content no-print">
+      <h2>Cadastrar Integrante no Louvor</h2>
+      <div style="margin-bottom: 10px;">
+        <label>Nome do Integrante:</label>
+        <input type="text" id="novo-nome" placeholder="Digite o nome completo">
+      </div>
+      <button class="btn-main" onclick="cadastrarMembro()">💾 Salvar Integrante</button>
+
+      <h2>
+        Integrantes Cadastrados 
+        <span id="total-membros-badge" style="font-size:0.85rem; background:#2d6a4f; color:#fff; padding:2px 8px; border-radius:12px; margin-left:6px;">Total: 0</span>
+      </h2>
+      <div id="lista-membros-cadastrados"></div>
+    </div>
+
+  </div>
+
+  <!-- CONEXÃO FIREBASE -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, set, remove, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyB-slUGWh8PnjW63craYa-BgTvjSoIJm2A",
+      authDomain: "louvorapp-4f609.firebaseapp.com",
+      projectId: "louvorapp-4f609",
+      storageBucket: "louvorapp-4f609.firebasestorage.app",
+      messagingSenderId: "358727212611",
+      appId: "1:358727212611:web:0c9792b9e78ff3ad067ef6",
+      measurementId: "G-SY1HW0E6FM"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    window.db = db;
+    window.dbRef = ref;
+    window.dbSet = set;
+    window.dbRemove = remove;
+
+    // Escutar registros de ensaios
+    onValue(ref(db, 'registros_louvor'), (snapshot) => {
+      window.todosOsDados = snapshot.val() || {};
+      carregarChamadaDoDia();
+    });
+
+    // Escutar membros cadastrados
+    onValue(ref(db, 'louvor_app/membros'), (snapshot) => {
+      window.integrantesCadastrados = snapshot.val() || {};
+      renderizarListaCadastrados();
+    });
+  </script>
+
+  <script>
+    const MEMBROS_FIXOS_PADRAO = [
+      "Aline", "Andressa", "Arimatéia", "Bruno", "Edilene", "Gessé", "Guilherme",
+      "Jaqueline", "Joan", "Josué", "Junior", "Khayan", "Lucilene",
+      "Marcela", "Priscila", "Raquel", "Rita", "Sabrina", "Simone Poppe", "Tatiana"
+    ];
+
+    let statusSelecionado = 'presente';
+    let tipoRelatorioAtual = 'diario';
+    window.todosOsDados = {};
+    window.integrantesCadastrados = {};
+
+    // MODO ESCURO
+    function alternarTema() {
+      const isDark = document.body.classList.toggle('dark-mode');
+      document.getElementById('theme-icon').innerText = isDark ? '☀️' : '🌙';
+      document.getElementById('theme-text').innerText = isDark ? 'Claro' : 'Escuro';
+      localStorage.setItem('louvor_theme', isDark ? 'dark' : 'light');
+    }
+
+    if (localStorage.getItem('louvor_theme') === 'dark') {
+      document.body.classList.add('dark-mode');
+      document.getElementById('theme-icon').innerText = '☀️';
+      document.getElementById('theme-text').innerText = 'Claro';
+    }
+
+    // ALTERNAR ABAS
+    function alternarAba(nomeAba) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+      if(nomeAba === 'ensaio') {
+        document.querySelectorAll('.tab-btn')[0].classList.add('active');
+        document.getElementById('tab-ensaio').classList.add('active');
+      } else {
+        document.querySelectorAll('.tab-btn')[1].classList.add('active');
+        document.getElementById('tab-membros').classList.add('active');
+      }
+    }
+
+    const inputData = document.getElementById('ensaio-data');
+    const hoje = new Date().toISOString().split('T')[0];
+    inputData.value = hoje;
+    document.getElementById('mes-relatorio').value = hoje.slice(0, 7);
+
+    function selecionarOpcao(status) {
+      statusSelecionado = status;
+      document.getElementById('lbl-p').className = 'status-btn ' + (status === 'presente' ? 'selected-p' : '');
+      document.getElementById('lbl-a').className = 'status-btn ' + (status === 'atrasado' ? 'selected-a' : '');
+      document.getElementById('lbl-f').className = 'status-btn ' + (status === 'ausente' ? 'selected-f' : '');
+    }
+
+    function getListaMembrosCompleta() {
+      const cadastrados = Object.values(window.integrantesCadastrados).map(m => m.nome);
+      return Array.from(new Set([...MEMBROS_FIXOS_PADRAO, ...cadastrados]));
+    }
+
+    function buscarSugestoes() {
+      const termo = document.getElementById('input-busca').value.trim().toLowerCase();
+      const divSugestoes = document.getElementById('sugestoes');
+
+      if (!termo) { divSugestoes.style.display = 'none'; return; }
+
+      const lista = getListaMembrosCompleta();
+      const correspondencias = lista.filter(n => n.toLowerCase().includes(termo));
+
+      if (correspondencias.length > 0) {
+        divSugestoes.innerHTML = correspondencias.map(nome =>
+          `<div class="suggestion-item" onclick="selecionarSugestao('${nome}')">${nome}</div>`
+        ).join('');
+      } else {
+        divSugestoes.innerHTML = `<div class="suggestion-item" style="color:#888;">Clique em adicionar para incluir novo nome</div>`;
+      }
+      divSugestoes.style.display = 'block';
+    }
+
+    function selecionarSugestao(nome) {
+      document.getElementById('input-busca').value = nome;
+      document.getElementById('sugestoes').style.display = 'none';
+    }
+
+    function adicionarEAutoSalvar() {
+      const nome = document.getElementById('input-busca').value.trim();
+      const dataSel = inputData.value;
+
+      if (!nome) { alert('Selecione ou digite um nome.'); return; }
+
+      const chaveNome = nome.replace(/[.#$\[\]]/g, "_");
+
+      if (window.db && window.dbSet) {
+        window.dbSet(window.dbRef(window.db, `registros_louvor/${dataSel}/${chaveNome}`), {
+          nome: nome,
+          status: statusSelecionado
+        }).then(() => {
+          document.getElementById('input-busca').value = '';
+          document.getElementById('sugestoes').style.display = 'none';
+        });
+      }
+    }
+
+    function removerDoFirebase(nome) {
+      const dataSel = inputData.value;
+      const chaveNome = nome.replace(/[.#$\[\]]/g, "_");
+      if (confirm(`Remover ${nome} da lista desta data?`)) {
+        window.dbRemove(window.dbRef(window.db, `registros_louvor/${dataSel}/${chaveNome}`));
+      }
+    }
+
+    function carregarChamadaDoDia() {
+      tipoRelatorioAtual = 'diario';
+      const dataSel = inputData.value;
+      const dataBr = dataSel.split('-').reverse().join('/');
+      const chamadaHoje = window.todosOsDados[dataSel] || {};
+
+      const divChamada = document.getElementById('lista-chamada');
+      const divFolha = document.getElementById('conteudo-folha');
+
+      let countP = 0, countA = 0, countF = 0;
+      const chaves = Object.keys(chamadaHoje);
+
+      if (chaves.length === 0) {
+        divChamada.innerHTML = '<p style="text-align: center; color: #888; font-size: 0.85rem;">Nenhum membro registrado para esta data.</p>';
+        divFolha.innerHTML = `<div class="paper-title">Relatório de Ensaio</div><p style="text-align:center; color:#888;">Sem registros para a data ${dataBr}.</p>`;
+      } else {
+        divChamada.innerHTML = '';
+
+        let htmlFolha = `<div class="paper-title">Relatório de Ensaio — ${dataBr}</div>`;
+        htmlFolha += `<table class="report-table"><thead><tr><th>Membro</th><th>Status</th></tr></thead><tbody>`;
+
+        chaves.forEach(k => {
+          const m = chamadaHoje[k];
+          let classeCard = 'card-p', classeTag = 'tag-p', textoTag = 'Presente', icone = '', rowClasse = 'class="row-presente"';
+
+          if (m.status === 'presente') countP++;
+          if (m.status === 'atrasado') {
+            classeCard = 'card-a'; classeTag = 'tag-a'; textoTag = 'Atrasado'; rowClasse = 'class="row-atrasado"'; countA++;
+          }
+          if (m.status === 'ausente') {
+            classeCard = 'card-f'; classeTag = 'tag-f'; textoTag = 'FALTOU'; rowClasse = 'class="row-ausente"'; icone = '⚠️ '; countF++;
+          }
+
+          divChamada.innerHTML += `
+            <div class="member-card ${classeCard}">
+              <span>${icone}<strong>${m.nome}</strong></span>
+              <div>
+                <span class="tag-status ${classeTag}">${textoTag}</span>
+                <button class="btn-del no-print" onclick="removerDoFirebase('${m.nome}')">✕</button>
+              </div>
+            </div>
+          `;
+
+          htmlFolha += `<tr ${rowClasse}><td>${m.nome}</td><td>${textoTag}</td></tr>`;
+        });
+
+        htmlFolha += `</tbody></table>`;
+        htmlFolha += `<div style="margin-top:15px; font-size:0.85rem; text-align:right;">
+          <strong>Total:</strong> <span style="color:#155724;">Presentes: ${countP}</span> | <span style="color:#856404;">Atrasos: ${countA}</span> | <span style="color:#dc3545;">Faltas: ${countF}</span>
+        </div>`;
+
+        divFolha.innerHTML = htmlFolha;
+      }
+
+      document.getElementById('cnt-p').innerText = countP;
+      document.getElementById('cnt-a').innerText = countA;
+      document.getElementById('cnt-f').innerText = countF;
+    }
+
+    function gerarRelatorioMensal() {
+      tipoRelatorioAtual = 'mensal';
+      const mesSel = document.getElementById('mes-relatorio').value;
+      const divFolha = document.getElementById('conteudo-folha');
+
+      const datasDoMes = Object.keys(window.todosOsDados).filter(d => d.startsWith(mesSel));
+
+      if (datasDoMes.length === 0) {
+        divFolha.innerHTML = `<div class="paper-title">Resumo Mensal (${mesSel})</div><p style="text-align:center; color:#c00;">Sem registros para este mês.</p>`;
+        return;
+      }
+
+      const stats = {};
+      const listaMembros = getListaMembrosCompleta();
+      listaMembros.forEach(n => stats[n] = { p: 0, a: 0, f: 0 });
+
+      datasDoMes.forEach(d => {
+        const registro = window.todosOsDados[d];
+        Object.values(registro).forEach(m => {
+          if (!stats[m.nome]) stats[m.nome] = { p: 0, a: 0, f: 0 };
+          if (m.status === 'presente') stats[m.nome].p++;
+          if (m.status === 'atrasado') stats[m.nome].a++;
+          if (m.status === 'ausente') stats[m.nome].f++;
+        });
+      });
+
+      let html = `<div class="paper-title">Resumo Mensal de Presença — ${mesSel}</div>`;
+      html += `<p style="margin-bottom:10px; font-size:0.85rem;"><strong>Ensaios Realizados no Mês:</strong> ${datasDoMes.length}</p>`;
+      html += `<table class="report-table"><thead><tr><th>Nome</th><th>Presenças</th><th>Atrasos</th><th>Faltas</th></tr></thead><tbody>`;
+
+      Object.keys(stats).forEach(n => {
+        const { p, a, f } = stats[n];
+        let rowClasse = '';
+        if (f > 0) rowClasse = 'class="row-ausente"';
+        else if (a > 0) rowClasse = 'class="row-atrasado"';
+        else if (p > 0) rowClasse = 'class="row-presente"';
+
+        html += `<tr ${rowClasse}><td>${n}</td><td>${p}</td><td>${a}</td><td>${f}</td></tr>`;
+      });
+
+      html += `</tbody></table>`;
+      divFolha.innerHTML = html;
+    }
+
+    // GERA A IMAGEM E ABRE O MENU NATIVO DE COMPARTILHAMENTO (WHATSAPP DIRETO)
+    function gerarImagemECompartilhar() {
+      const folha = document.getElementById('folha-timbrada');
+
+      html2canvas(folha, { scale: 2 }).then(canvas => {
+        canvas.toBlob(blob => {
+          const nomeArquivo = `Relatorio_Louvor_ICM_${inputData.value}.png`;
+          const file = new File([blob], nomeArquivo, { type: 'image/png' });
+
+          if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+            navigator.share({
+              files: [file],
+              title: 'Relatório Louvor ICM Pinhos',
+              text: 'Segue o relatório de presença do ensaio.'
+            }).catch(() => {});
+          } else {
+            const link = document.createElement('a');
+            link.download = nomeArquivo;
+            link.href = URL.createObjectURL(blob);
+            link.click();
+            alert("Imagem gerada e baixada com sucesso!");
+          }
+        }, 'image/png');
+      });
+    }
+
+    function enviarTextoWhatsApp() {
+      const dataSel = inputData.value;
+      const dataBr = dataSel.split('-').reverse().join('/');
+
+      if (tipoRelatorioAtual === 'diario') {
+        const chamadaHoje = window.todosOsDados[dataSel] || {};
+        const lista = Object.values(chamadaHoje);
+        if (lista.length === 0) { alert('Não há registros na data selecionada.'); return; }
+
+        const presentes = lista.filter(m => m.status === 'presente');
+        const atrasados = lista.filter(m => m.status === 'atrasado');
+        const ausentes = lista.filter(m => m.status === 'ausente');
+
+        let msg = `*🎵 RELATÓRIO DE ENSAIO — ICM PINHOS*\n📅 *Data:* ${dataBr}\n\n`;
+        msg += `✅ *PRESENTES (${presentes.length}):*\n` + presentes.map(m => `• ${m.nome}`).join('\n');
+        if (atrasados.length > 0) msg += `\n\n⏰ *ATRASADOS (${atrasados.length}):*\n` + atrasados.map(m => `• ${m.nome}`).join('\n');
+        if (ausentes.length > 0) msg += `\n\n🚨 *AUSENTES (${ausentes.length}):*\n` + ausentes.map(m => `❌ ${m.nome}`).join('\n');
+
+        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
+      } else {
+        const mesSel = document.getElementById('mes-relatorio').value;
+        const datasDoMes = Object.keys(window.todosOsDados).filter(d => d.startsWith(mesSel));
+        if (datasDoMes.length === 0) { alert('Sem dados registrados para este mês.'); return; }
+
+        const stats = {};
+        const listaMembros = getListaMembrosCompleta();
+        listaMembros.forEach(n => stats[n] = { p: 0, a: 0, f: 0 });
+
+        datasDoMes.forEach(d => {
+          Object.values(window.todosOsDados[d]).forEach(m => {
+            if (!stats[m.nome]) stats[m.nome] = { p: 0, a: 0, f: 0 };
+            if (m.status === 'presente') stats[m.nome].p++;
+            if (m.status === 'atrasado') stats[m.nome].a++;
+            if (m.status === 'ausente') stats[m.nome].f++;
+          });
+        });
+
+        let msg = `*📊 RESUMO MENSAL — ICM PINHOS (${mesSel})*\nTotal de Ensaios: ${datasDoMes.length}\n\n`;
+        Object.keys(stats).forEach(n => {
+          const { p, a, f } = stats[n];
+          if (p > 0 || a > 0 || f > 0) msg += `• *${n}*: P:${p} | A:${a} | ❌ F:${f}\n`;
+        });
+
+        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
+      }
+    }
+
+    // CADASTRO DE MEMBROS (Apenas Nome)
+    function cadastrarMembro() {
+      const nome = document.getElementById('novo-nome').value.trim();
+      if (!nome) { alert('Digite o nome do integrante!'); return; }
+
+      const id = nome.replace(/[.#$\[\]]/g, "_");
+      window.dbSet(window.dbRef(window.db, `louvor_app/membros/${id}`), { nome });
+
+      document.getElementById('novo-nome').value = '';
+      renderizarListaCadastrados();
+    }
+
+    function removerMembroCadastrado(id, nome) {
+      if (confirm(`Deseja remover ${nome} do cadastro?`)) {
+        window.dbRemove(window.dbRef(window.db, `louvor_app/membros/${id}`));
+      }
+    }
+
+    function renderizarListaCadastrados() {
+      const div = document.getElementById('lista-membros-cadastrados');
+      const chaves = Object.keys(window.integrantesCadastrados);
+      document.getElementById('total-membros-badge').innerText = `Total: ${chaves.length}`;
+
+      if (chaves.length === 0) {
+        div.innerHTML = '<p style="color:#888; text-align:center; padding:10px;">Nenhum integrante cadastrado manualmente ainda.</p>';
+        return;
+      }
+
+      let html = '';
+      chaves.sort((a,b) => window.integrantesCadastrados[a].nome.localeCompare(window.integrantesCadastrados[b].nome));
+      chaves.forEach(k => {
+        const m = window.integrantesCadastrados[k];
+        html += `
+          <div class="member-manage-item">
+            <div class="member-manage-info">
+              <span class="member-manage-name">${m.nome}</span>
+            </div>
+            <button class="btn-del" onclick="removerMembroCadastrado('${k}', '${m.nome}')">✕ Excluir</button>
+          </div>
+        `;
+      });
+      div.innerHTML = html;
+    }
+
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.search-container')) {
+        document.getElementById('sugestoes').style.display = 'none';
+      }
+    });
+  </script>
+
+</body>
+</html>
