@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Grupo de Louvor ICM PINHOS</title>
+  <title>Grupo de Louvor - ICM PINHOS</title>
 
   <!-- Configurações PWA / App para Celular -->
-  <meta name="theme-color" content="#2d6a4f">
+  <meta name="theme-color" content="#1a2a6c">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -14,8 +14,8 @@
   <meta name="application-name" content="Louvor PINHOS">
 
   <!-- Ícone SVG direto no HTML -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23f2ece1'/><text x='50%' y='40%' font-family='serif' font-style='italic' font-weight='bold' font-size='22' fill='%23b81d24' text-anchor='middle'>ICM</text><text x='50%' y='70%' font-family='serif' font-style='italic' font-weight='bold' font-size='18' fill='%23b81d24' text-anchor='middle'>PINHOS</text></svg>">
-  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23f2ece1'/><text x='50%' y='40%' font-family='serif' font-style='italic' font-weight='bold' font-size='22' fill='%23b81d24' text-anchor='middle'>ICM</text><text x='50%' y='70%' font-family='serif' font-style='italic' font-weight='bold' font-size='18' fill='%23b81d24' text-anchor='middle'>PINHOS</text></svg>">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231a2a6c'/><text x='50%' y='40%' font-family='sans-serif' font-weight='bold' font-size='18' fill='%23ffffff' text-anchor='middle'>ICM</text><text x='50%' y='70%' font-family='sans-serif' font-weight='bold' font-size='14' fill='%23b81d24' text-anchor='middle'>PINHOS</text></svg>">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231a2a6c'/><text x='50%' y='40%' font-family='sans-serif' font-weight='bold' font-size='18' fill='%23ffffff' text-anchor='middle'>ICM</text><text x='50%' y='70%' font-family='sans-serif' font-weight='bold' font-size='14' fill='%23b81d24' text-anchor='middle'>PINHOS</text></svg>">
 
   <link rel="manifest" href="manifest.json">
 
@@ -23,7 +23,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Playfair+Display:ital,wght@1,600;1,800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Cinzel:wght@700&family=Montserrat:wght@800;900&display=swap');
 
     :root {
       --bg-body: #f4f6f9;
@@ -31,8 +31,6 @@
       --text-main: #333333;
       --border-color: #ccc;
       --card-bg: #f8f9fa;
-      --logo-box-bg: #f3efe6;
-      --logo-box-border: #e2dad0;
     }
 
     body.dark-mode {
@@ -41,8 +39,6 @@
       --text-main: #e0e0e0;
       --border-color: #444444;
       --card-bg: #2a2a2a;
-      --logo-box-bg: #282420;
-      --logo-box-border: #443c34;
     }
 
     * {
@@ -76,7 +72,7 @@
       position: absolute;
       top: 15px;
       right: 15px;
-      background: var(--card-bg);
+      background: rgba(255, 255, 255, 0.2);
       border: 1px solid var(--border-color);
       color: var(--text-main);
       padding: 6px 12px;
@@ -90,12 +86,83 @@
       z-index: 10;
     }
 
+    /* ESTILIZAÇÃO DA LOGO DO GRUPO DE LOUVOR */
+    .logo-box {
+      background: linear-gradient(180deg, #b0c4de 0%, #dbe6f6 50%, #f0f4f8 100%);
+      border-radius: 12px;
+      padding: 25px 15px 20px 15px;
+      text-align: center;
+      position: relative;
+      margin-bottom: 20px;
+      box-shadow: inset 0 0 15px rgba(0,0,0,0.05), 0 4px 10px rgba(0,0,0,0.1);
+      border: 1px solid #cbd5e1;
+    }
+
+    .logo-title-1 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 2.2rem;
+      color: #0022cc;
+      letter-spacing: 2px;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .logo-title-2 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 2.2rem;
+      color: #000839;
+      letter-spacing: 2px;
+      line-height: 1.1;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    .logo-watermark-im {
+      font-family: 'Caveat', cursive;
+      font-size: 2.5rem;
+      color: #b81d24;
+      opacity: 0.35;
+      line-height: 0.5;
+      margin-top: 5px;
+      margin-bottom: -15px;
+    }
+
+    .logo-igreja {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #b81d24;
+      letter-spacing: 2.5px;
+      margin-top: 10px;
+      text-transform: uppercase;
+    }
+
+    .logo-bairro {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #b81d24;
+      letter-spacing: 4px;
+      margin-top: 2px;
+      text-transform: uppercase;
+    }
+
+    .logo-musical-note {
+      font-size: 2.2rem;
+      color: #3a3a3a;
+      margin-top: 8px;
+      display: inline-block;
+      line-height: 1;
+    }
+
     /* NAV TABS */
     .nav-tabs {
       display: flex;
       gap: 4px;
       margin-bottom: 20px;
-      border-bottom: 2px solid #2d6a4f;
+      border-bottom: 2px solid #000839;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
     }
@@ -114,58 +181,17 @@
     }
 
     .tab-btn.active {
-      background: #2d6a4f;
+      background: #000839;
       color: white;
     }
 
     .tab-content { display: none; }
     .tab-content.active { display: block; }
 
-    /* ESTILIZAÇÃO DO LOGO ICM PINHOS */
-    .logo-box {
-      background-color: var(--logo-box-bg);
-      border-radius: 12px;
-      padding: 20px 15px;
-      text-align: center;
-      position: relative;
-      margin-bottom: 20px;
-      box-shadow: inset 0 0 15px rgba(0,0,0,0.05);
-      border: 1px solid var(--logo-box-border);
-    }
-
-    .note-icon {
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      opacity: 0.6;
-    }
-
-    .note-top-left { top: 10px; left: 10px; }
-    .note-bottom-right { bottom: 10px; right: 10px; }
-
-    .logo-im {
-      font-family: 'Caveat', cursive;
-      font-size: 3.5rem;
-      color: #b81d24;
-      line-height: 0.8;
-      margin-bottom: 5px;
-    }
-
-    .logo-text {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-style: italic;
-      color: #b81d24;
-      line-height: 1.25;
-    }
-
-    .logo-text .line1 { font-size: 1.4rem; font-weight: 600; }
-    .logo-text .line2 { font-size: 1.6rem; font-weight: 800; letter-spacing: 1px; }
-    .logo-text .line3 { font-size: 1.4rem; font-weight: 800; letter-spacing: 2px; }
-
     h2 {
       font-size: 1rem;
-      color: #2d6a4f;
-      border-bottom: 2px solid #2d6a4f;
+      color: #000839;
+      border-bottom: 2px solid #000839;
       padding-bottom: 5px;
       margin-top: 15px;
       text-align: center;
@@ -177,7 +203,7 @@
     label {
       font-size: 0.85rem;
       font-weight: bold;
-      color: #2d6a4f;
+      color: #000839;
       display: block;
       margin-bottom: 5px;
     }
@@ -204,7 +230,7 @@
       left: 0;
       right: 0;
       background: var(--bg-container);
-      border: 1px solid #2d6a4f;
+      border: 1px solid #000839;
       border-radius: 0 0 8px 8px;
       max-height: 180px;
       overflow-y: auto;
@@ -222,8 +248,8 @@
     }
 
     .suggestion-item:hover {
-      background-color: #e8f5e9;
-      color: #1b4332;
+      background-color: #e8ecef;
+      color: #000839;
       font-weight: bold;
     }
 
@@ -257,13 +283,13 @@
       border-radius: 8px;
       font-weight: bold;
       cursor: pointer;
-      background-color: #2d6a4f;
+      background-color: #000839;
       color: white;
       font-size: 0.95rem;
       margin-bottom: 8px;
     }
 
-    button.btn-main:hover { background-color: #1b4332; }
+    button.btn-main:hover { background-color: #001f54; }
     .btn-wsp { background-color: #25d366 !important; color: #fff !important; }
     .btn-img { background-color: #007bff !important; color: #fff !important; }
     .btn-pdf { background-color: #6c757d !important; color: #fff !important; }
@@ -322,7 +348,7 @@
     .member-manage-info { display: flex; flex-direction: column; flex: 1; min-width: 0; }
     .member-manage-name { font-size: 0.92rem; font-weight: 700; word-break: break-word; line-height: 1.25; }
 
-    /* ESTILO DA FOLHA DE PAPEL TIMBRADA PARA IMPRESSÃO/IMAGEM */
+    /* ESTILO DA FOLHA TIMBRADA */
     .paper-sheet {
       background: #ffffff !important;
       color: #333333 !important;
@@ -336,7 +362,7 @@
     .paper-title {
       text-align: center;
       font-size: 1.1rem;
-      color: #1b4332;
+      color: #000839;
       margin-bottom: 15px;
       text-transform: uppercase;
       letter-spacing: 1px;
@@ -359,9 +385,8 @@
       color: #333333;
     }
 
-    .report-table th { background-color: #2d6a4f; color: white; }
+    .report-table th { background-color: #000839; color: white; }
 
-    /* DESTAQUE DE CORES NA TABELA TIMBRADA */
     .row-presente { background-color: #e8f5e9; color: #155724; }
     .row-atrasado { background-color: #fff8e1; color: #856404; font-weight: bold; }
     .row-ausente  { background-color: #ffeef0; color: #721c24; font-weight: bold; }
@@ -383,20 +408,14 @@
       <span id="theme-icon">🌙</span> <span id="theme-text">Escuro</span>
     </button>
 
-    <!-- CABEÇALHO COM LOGO -->
+    <!-- CABEÇALHO REPLICADO DA LOGO DA FOTO -->
     <div class="logo-box">
-      <svg class="note-icon note-top-left" viewBox="0 0 100 100">
-        <path d="M 30 70 A 10 10 0 1 1 30 50 L 70 30 L 70 60 A 10 10 0 1 1 70 40 L 70 30 L 30 50 Z" fill="none" stroke="#555" stroke-width="4"/>
-      </svg>
-      <div class="logo-im">im</div>
-      <div class="logo-text">
-        <div class="line1">Grupo de Louvor</div>
-        <div class="line2">ICM</div>
-        <div class="line3">PINHOS</div>
-      </div>
-      <svg class="note-icon note-bottom-right" viewBox="0 0 100 100">
-        <path d="M 30 70 A 10 10 0 1 1 30 50 L 70 30 L 70 60 A 10 10 0 1 1 70 40 L 70 30 L 30 50 Z" fill="none" stroke="#555" stroke-width="4"/>
-      </svg>
+      <div class="logo-title-1">GRUPO</div>
+      <div class="logo-title-2">DE LOUVOR</div>
+      <div class="logo-watermark-im">im</div>
+      <div class="logo-igreja">IGREJA CRISTÃ MARANATA</div>
+      <div class="logo-bairro">PINHOS</div>
+      <div class="logo-musical-note">🎼</div>
     </div>
 
     <!-- NAVEGAÇÃO POR ABAS -->
@@ -407,13 +426,11 @@
 
     <!-- ABA 1: CHAMADA E RELATÓRIO DE ENSAIO -->
     <div id="tab-ensaio" class="tab-content active">
-      <!-- Data da Chamada -->
       <div class="section">
         <label for="ensaio-data">Data do Ensaio (Histórico / Chamada):</label>
         <input type="date" id="ensaio-data" onchange="carregarChamadaDoDia()">
       </div>
 
-      <!-- Marcar Presença -->
       <div class="section no-print">
         <h2>Marcar Presença no Ensaio</h2>
 
@@ -431,7 +448,6 @@
         <button class="btn-main" onclick="adicionarEAutoSalvar()">➕ Adicionar (Salva no Firebase)</button>
       </div>
 
-      <!-- Chamada do Dia (Lista de Edição rápida) -->
       <div class="section no-print">
         <h2>Registro do Dia Selecionado</h2>
 
@@ -446,7 +462,6 @@
         </div>
       </div>
 
-      <!-- SEÇÃO DE RELATÓRIO TIMBRADO -->
       <div class="section">
         <h2>Gerar Relatório em Folha Timbrada</h2>
 
@@ -461,18 +476,16 @@
           <button class="btn-main btn-pdf" onclick="window.print()">🖨️ Imprimir / PDF</button>
         </div>
 
-        <!-- FOLHA TIMBRADA IMPRESSA / EXPORTÁVEL -->
+        <!-- FOLHA TIMBRADA -->
         <div id="folha-timbrada" class="paper-sheet">
           <div style="text-align:center; border-bottom: 2px solid #b81d24; padding-bottom: 10px; margin-bottom: 15px;">
-            <div style="font-family:'Caveat', cursive; font-size:2.2rem; color:#b81d24; line-height:0.8;">im</div>
-            <div style="font-family:'Playfair Display', serif; font-style:italic; color:#b81d24; font-size:1.1rem; font-weight:bold;">
-              Grupo de Louvor ICM PINHOS
+            <div style="font-family:'Montserrat', sans-serif; font-weight:900; font-size:1.2rem; color:#0022cc; letter-spacing:1px;">GRUPO DE LOUVOR</div>
+            <div style="font-family:'Cinzel', serif; font-size:0.95rem; color:#b81d24; font-weight:bold; letter-spacing:1px; margin-top:3px;">
+              IGREJA CRISTÃ MARANATA — PINHOS
             </div>
           </div>
 
-          <div id="conteudo-folha">
-            <!-- O conteúdo diário ou mensal entra aqui formatado -->
-          </div>
+          <div id="conteudo-folha"></div>
         </div>
       </div>
     </div>
@@ -488,7 +501,7 @@
 
       <h2>
         Integrantes Cadastrados 
-        <span id="total-membros-badge" style="font-size:0.85rem; background:#2d6a4f; color:#fff; padding:2px 8px; border-radius:12px; margin-left:6px;">Total: 0</span>
+        <span id="total-membros-badge" style="font-size:0.85rem; background:#000839; color:#fff; padding:2px 8px; border-radius:12px; margin-left:6px;">Total: 0</span>
       </h2>
       <div id="lista-membros-cadastrados"></div>
     </div>
@@ -518,13 +531,11 @@
     window.dbSet = set;
     window.dbRemove = remove;
 
-    // Escutar registros de ensaios
     onValue(ref(db, 'registros_louvor'), (snapshot) => {
       window.todosOsDados = snapshot.val() || {};
       carregarChamadaDoDia();
     });
 
-    // Escutar membros cadastrados no banco
     onValue(ref(db, 'membros_louvor'), (snapshot) => {
       window.integrantesCadastrados = snapshot.val() || {};
       renderizarListaCadastrados();
@@ -537,7 +548,6 @@
     window.todosOsDados = {};
     window.integrantesCadastrados = {};
 
-    // MODO ESCURO
     function alternarTema() {
       const isDark = document.body.classList.toggle('dark-mode');
       document.getElementById('theme-icon').innerText = isDark ? '☀️' : '🌙';
@@ -551,7 +561,6 @@
       document.getElementById('theme-text').innerText = 'Claro';
     }
 
-    // ALTERNAR ABAS
     function alternarAba(nomeAba) {
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
@@ -735,7 +744,6 @@
       divFolha.innerHTML = html;
     }
 
-    // GERA A IMAGEM E ABRE O MENU NATIVO DE COMPARTILHAMENTO (WHATSAPP DIRETO)
     function gerarImagemECompartilhar() {
       const folha = document.getElementById('folha-timbrada');
 
@@ -808,7 +816,6 @@
       }
     }
 
-    // CADASTRO DE MEMBROS
     function cadastrarMembro() {
       const nome = document.getElementById('novo-nome').value.trim();
       if (!nome) { alert('Digite o nome do integrante!'); return; }
