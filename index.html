@@ -174,7 +174,7 @@
       background: var(--card-bg);
       cursor: pointer;
       font-weight: bold;
-      font-size: 0.88rem;
+      font-size: 0.82rem;
       border-radius: 6px 6px 0 0;
       color: var(--text-main);
       white-space: nowrap;
@@ -207,6 +207,8 @@
       display: block;
       margin-bottom: 5px;
     }
+
+    body.dark-mode label { color: #8ab4f8; }
 
     input[type="date"], input[type="month"], input[type="text"] {
       width: 100%;
@@ -276,6 +278,39 @@
     .status-btn.selected-a { background-color: #fff3cd; border-color: #ffc107; color: #856404; }
     .status-btn.selected-f { background-color: #f8d7da; border-color: #dc3545; color: #721c24; }
 
+    /* BLOCO DE JUSTIFICATIVA */
+    .justification-box {
+      background: var(--card-bg);
+      border: 1px dashed var(--border-color);
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      display: none;
+    }
+
+    .justification-options {
+      display: flex;
+      gap: 10px;
+      margin-top: 5px;
+      margin-bottom: 8px;
+    }
+
+    .just-btn {
+      flex: 1;
+      padding: 6px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      border-radius: 4px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-container);
+      color: var(--text-main);
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .just-btn.selected-yes { background: #d1ecf1; border-color: #17a2b8; color: #0c5460; }
+    .just-btn.selected-no  { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+
     button.btn-main {
       width: 100%;
       padding: 12px;
@@ -321,6 +356,7 @@
     .tag-p { background: #d4edda; color: #155724; }
     .tag-a { background: #fff3cd; color: #856404; }
     .tag-f { background: #dc3545; color: #ffffff; }
+    .tag-just { font-size: 0.7rem; background: #e2e3e5; color: #383d41; padding: 2px 5px; border-radius: 3px; margin-left: 4px; }
 
     .btn-del {
       background: none;
@@ -374,13 +410,13 @@
       width: 100%;
       border-collapse: collapse;
       margin-top: 10px;
-      font-size: 0.85rem;
+      font-size: 0.83rem;
       background: #ffffff;
     }
 
     .report-table th, .report-table td {
       border: 1px solid #b8c2cc;
-      padding: 8px;
+      padding: 7px;
       text-align: left;
       color: #333333;
     }
@@ -420,8 +456,9 @@
 
     <!-- NAVEGAÇÃO POR ABAS -->
     <div class="nav-tabs no-print">
-      <button class="tab-btn active" onclick="alternarAba('ensaio')">📝 Chamada Ensaio</button>
-      <button class="tab-btn" onclick="alternarAba('membros')">👥 Cadastrar Membros</button>
+      <button class="tab-btn active" onclick="alternarAba('ensaio')">📝 Chamada</button>
+      <button class="tab-btn" onclick="alternarAba('dashboard')">📈 Dashboard</button>
+      <button class="tab-btn" onclick="alternarAba('membros')">👥 Membros</button>
     </div>
 
     <!-- ABA 1: CHAMADA E RELATÓRIO DE ENSAIO -->
@@ -443,6 +480,16 @@
           <label class="status-btn selected-p" id="lbl-p" onclick="selecionarOpcao('presente')">Presente</label>
           <label class="status-btn" id="lbl-a" onclick="selecionarOpcao('atrasado')">Atrasado</label>
           <label class="status-btn" id="lbl-f" onclick="selecionarOpcao('ausente')">Faltou</label>
+        </div>
+
+        <!-- CAMPO DE JUSTIFICATIVA (EXIBIDO SE ATRASADO OU FALTOSO) -->
+        <div id="box-justificativa" class="justification-box">
+          <label style="font-size: 0.8rem; margin-bottom: 2px;">Houve Justificativa?</label>
+          <div class="justification-options">
+            <div class="just-btn" id="j-sim" onclick="selecionarJustificativa('sim')">Sim</div>
+            <div class="just-btn selected-no" id="j-nao" onclick="selecionarJustificativa('nao')">Não</div>
+          </div>
+          <input type="text" id="input-motivo" placeholder="Motivo (opcional, ex: Trânsito, Trabalho...)" style="font-size: 0.85rem; padding: 8px;">
         </div>
 
         <button class="btn-main" onclick="adicionarEAutoSalvar()">➕ Adicionar (Salva no Firebase)</button>
@@ -490,7 +537,19 @@
       </div>
     </div>
 
-    <!-- ABA 2: CADASTRO DE MEMBROS -->
+    <!-- ABA 2: DASHBOARD DE FREQUÊNCIA -->
+    <div id="tab-dashboard" class="tab-content no-print">
+      <h2>Dashboard de Frequência</h2>
+      <div style="margin-bottom: 15px;">
+        <label for="mes-dashboard">Selecionar Mês:</label>
+        <input type="month" id="mes-dashboard" onchange="carregarDashboard()">
+      </div>
+      <div id="conteudo-dashboard">
+        <p style="text-align:center; color:#888;">Carregando estatísticas...</p>
+      </div>
+    </div>
+
+    <!-- ABA 3: CADASTRO DE MEMBROS -->
     <div id="tab-membros" class="tab-content no-print">
       <h2>Cadastrar Integrante no Louvor</h2>
       <div style="margin-bottom: 10px;">
@@ -534,16 +593,19 @@
     onValue(ref(db, 'registros_louvor'), (snapshot) => {
       window.todosOsDados = snapshot.val() || {};
       carregarChamadaDoDia();
+      carregarDashboard();
     });
 
     onValue(ref(db, 'membros_louvor'), (snapshot) => {
       window.integrantesCadastrados = snapshot.val() || {};
       renderizarListaCadastrados();
+      carregarDashboard();
     });
   </script>
 
   <script>
     let statusSelecionado = 'presente';
+    let justificativaSelecionada = 'nao';
     let tipoRelatorioAtual = 'diario';
     window.todosOsDados = {};
     window.integrantesCadastrados = {};
@@ -568,8 +630,12 @@
       if(nomeAba === 'ensaio') {
         document.querySelectorAll('.tab-btn')[0].classList.add('active');
         document.getElementById('tab-ensaio').classList.add('active');
-      } else {
+      } else if(nomeAba === 'dashboard') {
         document.querySelectorAll('.tab-btn')[1].classList.add('active');
+        document.getElementById('tab-dashboard').classList.add('active');
+        carregarDashboard();
+      } else {
+        document.querySelectorAll('.tab-btn')[2].classList.add('active');
         document.getElementById('tab-membros').classList.add('active');
       }
     }
@@ -578,12 +644,34 @@
     const hoje = new Date().toISOString().split('T')[0];
     inputData.value = hoje;
     document.getElementById('mes-relatorio').value = hoje.slice(0, 7);
+    document.getElementById('mes-dashboard').value = hoje.slice(0, 7);
 
     function selecionarOpcao(status) {
       statusSelecionado = status;
       document.getElementById('lbl-p').className = 'status-btn ' + (status === 'presente' ? 'selected-p' : '');
       document.getElementById('lbl-a').className = 'status-btn ' + (status === 'atrasado' ? 'selected-a' : '');
       document.getElementById('lbl-f').className = 'status-btn ' + (status === 'ausente' ? 'selected-f' : '');
+
+      const boxJust = document.getElementById('box-justificativa');
+      if (status === 'atrasado' || status === 'ausente') {
+        boxJust.style.display = 'block';
+      } else {
+        boxJust.style.display = 'none';
+      }
+    }
+
+    function selecionarJustificativa(val) {
+      justificativaSelecionada = val;
+      const btnSim = document.getElementById('j-sim');
+      const btnNao = document.getElementById('j-nao');
+
+      if (val === 'sim') {
+        btnSim.className = 'just-btn selected-yes';
+        btnNao.className = 'just-btn';
+      } else {
+        btnSim.className = 'just-btn';
+        btnNao.className = 'just-btn selected-no';
+      }
     }
 
     function getListaMembrosCompleta() {
@@ -604,7 +692,7 @@
           `<div class="suggestion-item" onclick="selecionarSugestao('${nome}')">${nome}</div>`
         ).join('');
       } else {
-        divSugestoes.innerHTML = `<div class="suggestion-item" style="color:#888;">Cadastre o nome na aba "Cadastrar Membros"</div>`;
+        divSugestoes.innerHTML = `<div class="suggestion-item" style="color:#888;">Cadastre o nome na aba "Membros"</div>`;
       }
       divSugestoes.style.display = 'block';
     }
@@ -617,17 +705,22 @@
     function adicionarEAutoSalvar() {
       const nome = document.getElementById('input-busca').value.trim();
       const dataSel = inputData.value;
+      const motivo = document.getElementById('input-motivo').value.trim();
 
       if (!nome) { alert('Selecione ou digite um nome.'); return; }
 
       const chaveNome = nome.replace(/[.#$\[\]]/g, "_");
+      const dadosRegistro = {
+        nome: nome,
+        status: statusSelecionado,
+        justificado: (statusSelecionado !== 'presente') ? justificativaSelecionada : 'nao',
+        motivo: (statusSelecionado !== 'presente') ? motivo : ''
+      };
 
       if (window.db && window.dbSet) {
-        window.dbSet(window.dbRef(window.db, `registros_louvor/${dataSel}/${chaveNome}`), {
-          nome: nome,
-          status: statusSelecionado
-        }).then(() => {
+        window.dbSet(window.dbRef(window.db, `registros_louvor/${dataSel}/${chaveNome}`), dadosRegistro).then(() => {
           document.getElementById('input-busca').value = '';
+          document.getElementById('input-motivo').value = '';
           document.getElementById('sugestoes').style.display = 'none';
         });
       }
@@ -660,35 +753,49 @@
         divChamada.innerHTML = '';
 
         let htmlFolha = `<div class="paper-title">Relatório de Ensaio — ${dataBr}</div>`;
-        htmlFolha += `<table class="report-table"><thead><tr><th>Membro</th><th>Status</th></tr></thead><tbody>`;
+        htmlFolha += `<table class="report-table"><thead><tr><th>Membro</th><th>Status</th><th>Detalhes</th></tr></thead><tbody>`;
 
         chaves.forEach(k => {
           const m = chamadaHoje[k];
           let classeCard = 'card-p', classeTag = 'tag-p', textoTag = 'Presente', icone = '', rowClasse = 'class="row-presente"';
+          let tagJust = '';
+          let detalheTexto = '-';
 
           if (m.status === 'presente') countP++;
           if (m.status === 'atrasado') {
             classeCard = 'card-a'; classeTag = 'tag-a'; textoTag = 'Atrasado'; rowClasse = 'class="row-atrasado"'; countA++;
+            if (m.justificado === 'sim') {
+              tagJust = `<span class="tag-just">Justif. Sim</span>`;
+              detalheTexto = `Atrasado (Justificado${m.motivo ? ': ' + m.motivo : ''})`;
+            } else {
+              detalheTexto = `Atrasado (Sem justificativa)`;
+            }
           }
           if (m.status === 'ausente') {
             classeCard = 'card-f'; classeTag = 'tag-f'; textoTag = 'FALTOU'; rowClasse = 'class="row-ausente"'; icone = '⚠️ '; countF++;
+            if (m.justificado === 'sim') {
+              tagJust = `<span class="tag-just">Falta Justif.</span>`;
+              detalheTexto = `Faltou (Justificado${m.motivo ? ': ' + m.motivo : ''})`;
+            } else {
+              detalheTexto = `Faltou (Sem justificativa)`;
+            }
           }
 
           divChamada.innerHTML += `
             <div class="member-card ${classeCard}">
               <span>${icone}<strong>${m.nome}</strong></span>
               <div>
-                <span class="tag-status ${classeTag}">${textoTag}</span>
+                <span class="tag-status ${classeTag}">${textoTag}</span> ${tagJust}
                 <button class="btn-del no-print" onclick="removerDoFirebase('${m.nome}')">✕</button>
               </div>
             </div>
           `;
 
-          htmlFolha += `<tr ${rowClasse}><td>${m.nome}</td><td>${textoTag}</td></tr>`;
+          htmlFolha += `<tr ${rowClasse}><td>${m.nome}</td><td>${textoTag}</td><td>${detalheTexto}</td></tr>`;
         });
 
         htmlFolha += `</tbody></table>`;
-        htmlFolha += `<div style="margin-top:15px; font-size:0.85rem; text-align:right;">
+        htmlFolha += `<div style="margin-top:15px; font-size:0.83rem; text-align:right;">
           <strong>Total:</strong> <span style="color:#155724;">Presentes: ${countP}</span> | <span style="color:#856404;">Atrasos: ${countA}</span> | <span style="color:#dc3545;">Faltas: ${countF}</span>
         </div>`;
 
@@ -714,34 +821,120 @@
 
       const stats = {};
       const listaMembros = getListaMembrosCompleta();
-      listaMembros.forEach(n => stats[n] = { p: 0, a: 0, f: 0 });
+      listaMembros.forEach(n => stats[n] = { p: 0, a: 0, f: 0, j: 0 });
 
       datasDoMes.forEach(d => {
         const registro = window.todosOsDados[d];
         Object.values(registro).forEach(m => {
-          if (!stats[m.nome]) stats[m.nome] = { p: 0, a: 0, f: 0 };
+          if (!stats[m.nome]) stats[m.nome] = { p: 0, a: 0, f: 0, j: 0 };
           if (m.status === 'presente') stats[m.nome].p++;
-          if (m.status === 'atrasado') stats[m.nome].a++;
-          if (m.status === 'ausente') stats[m.nome].f++;
+          if (m.status === 'atrasado') {
+            stats[m.nome].a++;
+            if (m.justificado === 'sim') stats[m.nome].j++;
+          }
+          if (m.status === 'ausente') {
+            stats[m.nome].f++;
+            if (m.justificado === 'sim') stats[m.nome].j++;
+          }
         });
       });
 
       let html = `<div class="paper-title">Resumo Mensal de Presença — ${mesSel}</div>`;
-      html += `<p style="margin-bottom:10px; font-size:0.85rem;"><strong>Ensaios Realizados no Mês:</strong> ${datasDoMes.length}</p>`;
-      html += `<table class="report-table"><thead><tr><th>Nome</th><th>Presenças</th><th>Atrasos</th><th>Faltas</th></tr></thead><tbody>`;
+      html += `<p style="margin-bottom:10px; font-size:0.83rem;"><strong>Ensaios Realizados:</strong> ${datasDoMes.length}</p>`;
+      html += `<table class="report-table"><thead><tr><th>Nome</th><th>Presenças</th><th>Atrasos</th><th>Faltas</th><th>Justificadas</th></tr></thead><tbody>`;
 
       Object.keys(stats).forEach(n => {
-        const { p, a, f } = stats[n];
+        const { p, a, f, j } = stats[n];
         let rowClasse = '';
         if (f > 0) rowClasse = 'class="row-ausente"';
         else if (a > 0) rowClasse = 'class="row-atrasado"';
         else if (p > 0) rowClasse = 'class="row-presente"';
 
-        html += `<tr ${rowClasse}><td>${n}</td><td>${p}</td><td>${a}</td><td>${f}</td></tr>`;
+        html += `<tr ${rowClasse}><td>${n}</td><td>${p}</td><td>${a}</td><td>${f}</td><td>${j}</td></tr>`;
       });
 
       html += `</tbody></table>`;
       divFolha.innerHTML = html;
+    }
+
+    function carregarDashboard() {
+      const mesSel = document.getElementById('mes-dashboard').value;
+      const divDash = document.getElementById('conteudo-dashboard');
+      const datasDoMes = Object.keys(window.todosOsDados).filter(d => d.startsWith(mesSel));
+      const totalMembrosCadastrados = Object.keys(window.integrantesCadastrados).length;
+
+      if (datasDoMes.length === 0) {
+        divDash.innerHTML = `<p style="text-align:center; color:#888; padding:20px;">Nenhum ensaio registrado no mês de ${mesSel}.</p>`;
+        return;
+      }
+
+      let totalPresencas = 0, totalAtrasos = 0, totalFaltas = 0, totalJustificadas = 0;
+      const statsMembros = {};
+      const listaMembros = getListaMembrosCompleta();
+      listaMembros.forEach(n => statsMembros[n] = { p: 0, a: 0, f: 0, j: 0 });
+
+      datasDoMes.forEach(d => {
+        const registro = window.todosOsDados[d];
+        Object.values(registro).forEach(m => {
+          if (!statsMembros[m.nome]) statsMembros[m.nome] = { p: 0, a: 0, f: 0, j: 0 };
+          if (m.status === 'presente') { statsMembros[m.nome].p++; totalPresencas++; }
+          if (m.status === 'atrasado') { 
+            statsMembros[m.nome].a++; totalAtrasos++; 
+            if(m.justificado === 'sim') { statsMembros[m.nome].j++; totalJustificadas++; }
+          }
+          if (m.status === 'ausente') { 
+            statsMembros[m.nome].f++; totalFaltas++; 
+            if(m.justificado === 'sim') { statsMembros[m.nome].j++; totalJustificadas++; }
+          }
+        });
+      });
+
+      const totalRegistros = totalPresencas + totalAtrasos + totalFaltas;
+      const taxaPresencaGeral = totalRegistros > 0 ? ((totalPresencas + totalAtrasos) / totalRegistros * 100).toFixed(1) : 0;
+
+      let html = `
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:15px;">
+          <div style="background:var(--card-bg); padding:12px; border-radius:8px; border:1px solid var(--border-color); text-align:center;">
+            <div style="font-size:0.75rem; color:#888; font-weight:bold;">ENSAIOS NO MÊS</div>
+            <div style="font-size:1.4rem; font-weight:900; color:#000839;">${datasDoMes.length}</div>
+          </div>
+          <div style="background:var(--card-bg); padding:12px; border-radius:8px; border:1px solid var(--border-color); text-align:center;">
+            <div style="font-size:0.75rem; color:#888; font-weight:bold;">TAXA DE ASSIDUIDADE</div>
+            <div style="font-size:1.4rem; font-weight:900; color:#28a745;">${taxaPresencaGeral}%</div>
+          </div>
+        </div>
+
+        <div style="background:var(--card-bg); padding:10px; border-radius:8px; border:1px solid var(--border-color); margin-bottom:15px; font-size:0.85rem;">
+          <div>✅ Presenças: <strong>${totalPresencas}</strong></div>
+          <div>⏰ Atrasos: <strong>${totalAtrasos}</strong></div>
+          <div>❌ Faltas: <strong>${totalFaltas}</strong> (sendo ${totalJustificadas} justificadas)</div>
+        </div>
+
+        <h2>Frequência Individual (20 Integrantes)</h2>
+        <table class="report-table">
+          <thead>
+            <tr>
+              <th>Integrante</th>
+              <th>P</th>
+              <th>A</th>
+              <th>F</th>
+              <th>Justif.</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      Object.keys(statsMembros).forEach(n => {
+        const { p, a, f, j } = statsMembros[n];
+        let rowCor = '';
+        if (f > 2) rowCor = 'class="row-ausente"';
+        else if (f > 0) rowCor = 'class="row-atrasado"';
+
+        html += `<tr ${rowCor}><td>${n}</td><td>${p}</td><td>${a}</td><td>${f}</td><td>${j}</td></tr>`;
+      });
+
+      html += `</tbody></table>`;
+      divDash.innerHTML = html;
     }
 
     function gerarImagemECompartilhar() {
@@ -784,8 +977,13 @@
 
         let msg = `*🎵 RELATÓRIO DE ENSAIO — ICM PINHOS*\n📅 *Data:* ${dataBr}\n\n`;
         msg += `✅ *PRESENTES (${presentes.length}):*\n` + presentes.map(m => `• ${m.nome}`).join('\n');
-        if (atrasados.length > 0) msg += `\n\n⏰ *ATRASADOS (${atrasados.length}):*\n` + atrasados.map(m => `• ${m.nome}`).join('\n');
-        if (ausentes.length > 0) msg += `\n\n🚨 *AUSENTES (${ausentes.length}):*\n` + ausentes.map(m => `❌ ${m.nome}`).join('\n');
+        
+        if (atrasados.length > 0) {
+          msg += `\n\n⏰ *ATRASADOS (${atrasados.length}):*\n` + atrasados.map(m => `• ${m.nome} ${m.justificado === 'sim' ? '(Justif.)' : ''}`).join('\n');
+        }
+        if (ausentes.length > 0) {
+          msg += `\n\n🚨 *AUSENTES (${ausentes.length}):*\n` + ausentes.map(m => `❌ ${m.nome} ${m.justificado === 'sim' ? '(Justif.)' : ''}`).join('\n');
+        }
 
         window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
       } else {
@@ -795,21 +993,21 @@
 
         const stats = {};
         const listaMembros = getListaMembrosCompleta();
-        listaMembros.forEach(n => stats[n] = { p: 0, a: 0, f: 0 });
+        listaMembros.forEach(n => stats[n] = { p: 0, a: 0, f: 0, j: 0 });
 
         datasDoMes.forEach(d => {
           Object.values(window.todosOsDados[d]).forEach(m => {
-            if (!stats[m.nome]) stats[m.nome] = { p: 0, a: 0, f: 0 };
+            if (!stats[m.nome]) stats[m.nome] = { p: 0, a: 0, f: 0, j: 0 };
             if (m.status === 'presente') stats[m.nome].p++;
-            if (m.status === 'atrasado') stats[m.nome].a++;
-            if (m.status === 'ausente') stats[m.nome].f++;
+            if (m.status === 'atrasado') { stats[m.nome].a++; if(m.justificado==='sim') stats[m.nome].j++; }
+            if (m.status === 'ausente') { stats[m.nome].f++; if(m.justificado==='sim') stats[m.nome].j++; }
           });
         });
 
         let msg = `*📊 RESUMO MENSAL — ICM PINHOS (${mesSel})*\nTotal de Ensaios: ${datasDoMes.length}\n\n`;
         Object.keys(stats).forEach(n => {
-          const { p, a, f } = stats[n];
-          if (p > 0 || a > 0 || f > 0) msg += `• *${n}*: P:${p} | A:${a} | ❌ F:${f}\n`;
+          const { p, a, f, j } = stats[n];
+          if (p > 0 || a > 0 || f > 0) msg += `• *${n}*: P:${p} | A:${a} | ❌ F:${f} (Justif: ${j})\n`;
         });
 
         window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
