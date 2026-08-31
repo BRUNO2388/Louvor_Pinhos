@@ -11,6 +11,7 @@
 <link rel="manifest" href="manifest.json">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <link rel="stylesheet" href="styles.css?v=20260830-8">
+<link rel="stylesheet" href="polish.css?v=20260830-8">
 </head>
 <body>
 <div id="auth-overlay" class="auth-overlay"><div class="auth-card"><h2>🔐 Acesso ao Grupo de Louvor</h2><label>Usuário</label><input id="login-usuario" autocomplete="username" placeholder="Usuário ou e-mail"><label>Senha</label><input id="login-senha" type="password" autocomplete="current-password" placeholder="Senha" onkeydown="if(event.key==='Enter') entrarNoApp()"><button class="btn-main" onclick="entrarNoApp()">Entrar</button><button class="link-btn" onclick="recuperarSenha()">Esqueci minha senha</button><div id="login-erro" class="auth-error"></div></div></div>
