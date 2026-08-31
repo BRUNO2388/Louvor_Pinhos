@@ -1,133 +1,117 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Grupo de Louvor - ICM PINHOS</title>
-  <meta name="theme-color" content="#1a2a6c">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Louvor PINHOS">
-  <link rel="manifest" href="manifest.json">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <style>
-    :root{--bg:#f4f6f9;--card:#fff;--text:#333;--border:#ccd3db;--primary:#000839;--muted:#6c757d}
-    body.dark-mode{--bg:#121212;--card:#1e1e1e;--text:#e4e4e4;--border:#444;--primary:#304ffe;--muted:#aaa}
-    *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
-    body{background:var(--bg);color:var(--text);padding:15px;display:flex;justify-content:center;min-height:100vh}
-    .container{width:100%;max-width:620px;background:var(--card);padding:20px;border-radius:12px;box-shadow:0 4px 15px rgba(0,0,0,.08);position:relative}
-    .logo-box{background:linear-gradient(180deg,#b0c4de,#dbe6f6,#f0f4f8);border:1px solid #cbd5e1;border-radius:12px;padding:22px 15px;text-align:center;margin-bottom:15px;color:#000839}
-    .logo-title{font-size:1.7rem;font-weight:900;letter-spacing:2px}.logo-sub{color:#b81d24;font-weight:800;letter-spacing:2px;margin-top:5px}
-    .user-bar{display:none;align-items:center;justify-content:space-between;gap:8px;margin:0 0 12px;padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);font-size:.82rem}
-    .top-actions{display:flex;gap:6px}.small-btn{border:1px solid var(--border);background:var(--card);color:var(--text);padding:6px 9px;border-radius:7px;cursor:pointer;font-weight:700}
-    .nav-tabs{display:flex;gap:4px;margin-bottom:18px;border-bottom:2px solid var(--primary);overflow-x:auto}.tab-btn{flex:1;padding:10px 6px;border:0;background:var(--bg);color:var(--text);cursor:pointer;font-weight:800;border-radius:6px 6px 0 0;white-space:nowrap}.tab-btn.active{background:var(--primary);color:white}
-    .tab-content{display:none}.tab-content.active{display:block}.section{margin-bottom:18px}h2{font-size:1rem;color:var(--primary);border-bottom:2px solid var(--primary);padding-bottom:5px;margin:15px 0;text-align:center}
-    label{display:block;font-size:.85rem;font-weight:800;margin:6px 0 4px}input{width:100%;padding:11px;border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:8px;font-size:.95rem;outline:none}
-    button.btn-main{width:100%;padding:12px;border:0;border-radius:8px;background:var(--primary);color:#fff;font-weight:800;cursor:pointer;margin:7px 0}.btn-wsp{background:#25d366!important}.btn-img{background:#1976d2!important}.btn-pdf{background:#6c757d!important}.btn-danger{background:#b71c1c!important}
-    .status-selector{display:flex;gap:8px;margin:10px 0}.status-btn{flex:1;padding:10px;border:1px solid var(--border);border-radius:7px;text-align:center;cursor:pointer;font-size:.84rem;font-weight:800}.selected-p{background:#d4edda;color:#155724;border-color:#28a745}.selected-a{background:#fff3cd;color:#856404;border-color:#ffc107}.selected-f{background:#f8d7da;color:#721c24;border-color:#dc3545}
-    .justification-box{display:none;padding:10px;border:1px dashed var(--border);border-radius:8px;margin-bottom:10px}.just-row{display:flex;gap:8px;margin-bottom:8px}.just-row button{flex:1;padding:7px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--text);cursor:pointer}.just-row button.active{background:#d1ecf1;color:#0c5460;border-color:#17a2b8}
-    .suggestions{display:none;border:1px solid var(--primary);border-radius:7px;max-height:180px;overflow:auto;background:var(--card);position:absolute;left:0;right:0;z-index:20}.search-wrap{position:relative}.suggestion{padding:9px;border-bottom:1px solid var(--border);cursor:pointer}
-    .counter{display:flex;justify-content:space-around;background:var(--bg);border:1px solid var(--border);padding:8px;border-radius:7px;font-weight:800;margin-bottom:10px}.member-card,.manage-item{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px;border:1px solid var(--border);border-left-width:5px;border-radius:7px;margin-bottom:7px}.card-p{border-left-color:#28a745}.card-a{border-left-color:#ffc107}.card-f{border-left-color:#dc3545}.tag{font-size:.73rem;font-weight:800;padding:3px 7px;border-radius:4px}.tag-p{background:#d4edda;color:#155724}.tag-a{background:#fff3cd;color:#856404}.tag-f{background:#dc3545;color:#fff}.del{border:0;background:none;color:#c62828;font-size:1rem;font-weight:900;cursor:pointer}
-    .paper{background:#fff;color:#333;border:1px solid #ccc;padding:18px;border-radius:8px;margin-top:12px}.paper-title{text-align:center;color:#000839;font-weight:900;margin-bottom:12px}.report-table{width:100%;border-collapse:collapse;font-size:.83rem}.report-table th,.report-table td{border:1px solid #bbb;padding:6px;text-align:left}.report-table th{background:#000839;color:#fff}.row-presente{background:#e8f5e9}.row-atrasado{background:#fff8e1}.row-ausente{background:#ffeef0}
-    .dash-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}.dash-card{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px;text-align:center}.dash-card strong{display:block;font-size:1.2rem}.muted{color:var(--muted);font-size:.84rem;text-align:center}
-    .auth-overlay{position:fixed;inset:0;background:rgba(0,0,0,.72);display:flex;align-items:center;justify-content:center;padding:20px;z-index:9999}.auth-card{width:100%;max-width:390px;background:#fff;color:#222;border-radius:14px;padding:22px;box-shadow:0 12px 35px rgba(0,0,0,.35)}.auth-card h2{color:#000839;margin-top:0}.auth-card input{background:#fff;color:#222;margin-bottom:8px}.auth-error{min-height:20px;color:#b71c1c;font-size:.84rem;font-weight:700;margin-top:5px}.loading{padding:12px;text-align:center;color:var(--muted)}
-    @media print{body{padding:0;background:#fff}.container{box-shadow:none;max-width:none}.no-print,.auth-overlay,.user-bar,.nav-tabs,.logo-box{display:none!important}.tab-content{display:block!important}.paper{border:0}.section:not(:has(.paper)){display:none}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Grupo de Louvor - ICM PINHOS</title>
+<meta name="theme-color" content="#0b1b46">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Louvor PINHOS">
+<link rel="manifest" href="manifest.json">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="auth-overlay" class="auth-overlay">
-    <div class="auth-card">
-      <h2>🔐 Acesso ao Grupo de Louvor</h2>
-      <label>Usuário</label>
-      <input id="login-usuario" type="text" autocomplete="username" placeholder="Usuário ou e-mail">
-      <label>Senha</label>
-      <input id="login-senha" type="password" autocomplete="current-password" placeholder="Senha" onkeydown="if(event.key==='Enter') entrarNoApp()">
-      <button class="btn-main" onclick="entrarNoApp()">Entrar</button>
-      <div id="login-erro" class="auth-error"></div>
-    </div>
+<div id="auth-overlay" class="auth-overlay">
+  <div class="auth-card">
+    <h2>🔐 Acesso ao Grupo de Louvor</h2>
+    <label>Usuário</label><input id="login-usuario" autocomplete="username" placeholder="Usuário ou e-mail">
+    <label>Senha</label><input id="login-senha" type="password" autocomplete="current-password" placeholder="Senha" onkeydown="if(event.key==='Enter') entrarNoApp()">
+    <button class="btn-main" onclick="entrarNoApp()">Entrar</button>
+    <div id="login-erro" class="auth-error"></div>
+  </div>
+</div>
+<div id="toast" class="toast"></div>
+
+<div class="app">
+  <div class="hero">
+    <h1>GRUPO DE LOUVOR</h1><p>IGREJA CRISTÃ MARANATA — PINHOS</p>
+    <div class="hero-mini"><span class="hero-chip" id="hero-data">📅 Hoje</span><span class="hero-chip" id="hero-membros">👥 0 integrantes</span><span class="hero-chip" id="hero-role">🔐 Acesso</span></div>
+  </div>
+  <div id="user-bar" class="user-bar no-print"><span id="user-info"></span><div class="top-actions"><button class="small-btn" onclick="alternarTema()">🌙 Tema</button><button class="small-btn" onclick="sairDoApp()">Sair</button></div></div>
+
+  <div class="nav-tabs no-print">
+    <button class="tab-btn active" data-tab="chamada" onclick="alternarAba('chamada',this)">✅ Chamada</button>
+    <button class="tab-btn" data-tab="historico" onclick="alternarAba('historico',this)">🗓️ Histórico</button>
+    <button class="tab-btn" data-tab="dashboard" onclick="alternarAba('dashboard',this)">📊 Dashboard</button>
+    <button class="tab-btn" data-tab="membros" onclick="alternarAba('membros',this)">👥 Membros</button>
+    <button class="tab-btn admin-tab" data-tab="config" onclick="alternarAba('config',this)" style="display:none">⚙️ Gestão</button>
   </div>
 
-  <div class="container">
-    <div class="logo-box"><div class="logo-title">GRUPO DE LOUVOR</div><div class="logo-sub">IGREJA CRISTÃ MARANATA — PINHOS</div></div>
-    <div id="user-bar" class="user-bar no-print"><span id="user-info"></span><div class="top-actions"><button class="small-btn" onclick="alternarTema()">🌙 Tema</button><button class="small-btn" onclick="sairDoApp()">Sair</button></div></div>
+  <div id="tab-chamada" class="tab-content active">
+    <div class="card no-print">
+      <div class="section-title"><h2>Chamada rápida</h2><span class="badge" id="quick-progress">0/0 marcados</span></div>
+      <label>Data</label><input type="date" id="ensaio-data" onchange="carregarTudoDaData()">
+      <div class="grid2" style="margin-top:8px"><button class="btn-main btn-secondary" onclick="marcarTodos('presente')">✅ Todos presentes</button><button class="btn-main btn-secondary" onclick="limparMarcacoes()">↺ Limpar marcações</button></div>
+      <div id="lista-chamada-rapida" style="margin-top:8px"><div class="muted center">Faça login para carregar.</div></div>
+      <button id="btn-salvar-chamada" class="btn-main btn-success" onclick="salvarChamadaRapida()">💾 SALVAR CHAMADA</button>
+      <div class="muted center">Nenhum integrante é considerado presente até ser marcado.</div>
 
-    <div class="nav-tabs no-print">
-      <button class="tab-btn active" onclick="alternarAba('ensaio',this)">📝 Chamada</button>
-      <button class="tab-btn" onclick="alternarAba('dashboard',this)">📈 Dashboard</button>
-      <button class="tab-btn" onclick="alternarAba('membros',this)">👥 Membros</button>
-    </div>
-
-    <div id="tab-ensaio" class="tab-content active">
-      <div class="section no-print"><label>Data do Ensaio / Chamada</label><input type="date" id="ensaio-data" onchange="carregarChamadaDoDia()"></div>
-      <div class="section no-print">
-        <h2>Marcar Presença</h2>
-        <div class="search-wrap"><input id="input-busca" type="text" placeholder="Digite o nome..." oninput="buscarSugestoes()" autocomplete="off"><div id="sugestoes" class="suggestions"></div></div>
+      <details class="manual-details">
+        <summary>Adicionar nome avulso / visitante do grupo</summary>
+        <div style="margin-top:10px"><label>Nome</label><input id="input-busca" placeholder="Digite o nome"></div>
         <div class="status-selector"><div id="lbl-p" class="status-btn selected-p" onclick="selecionarOpcao('presente')">Presente</div><div id="lbl-a" class="status-btn" onclick="selecionarOpcao('atrasado')">Atrasado</div><div id="lbl-f" class="status-btn" onclick="selecionarOpcao('ausente')">Faltou</div></div>
-        <div id="box-justificativa" class="justification-box"><label>Houve justificativa?</label><div class="just-row"><button id="j-sim" onclick="selecionarJustificativa('sim')">Sim</button><button id="j-nao" class="active" onclick="selecionarJustificativa('nao')">Não</button></div><input id="input-motivo" type="text" placeholder="Motivo (opcional)"></div>
-        <button class="btn-main" onclick="adicionarEAutoSalvar()">➕ Adicionar e salvar</button>
-      </div>
-      <div class="section no-print"><h2>Registro do Dia Selecionado</h2><div class="counter"><span>P: <span id="cnt-p">0</span></span><span>A: <span id="cnt-a">0</span></span><span>F: <span id="cnt-f">0</span></span></div><div id="lista-chamada" class="loading">Faça login para carregar.</div></div>
-      <div class="section"><h2>Relatório</h2><div class="no-print" style="display:flex;gap:8px"><input type="month" id="mes-relatorio"><button class="btn-main" style="width:auto" onclick="gerarRelatorioMensal()">Mensal</button></div><div class="no-print"><button class="btn-main btn-img" onclick="gerarImagemECompartilhar()">📲 Compartilhar imagem</button><button class="btn-main btn-wsp" onclick="enviarTextoWhatsApp()">💬 WhatsApp texto</button><button class="btn-main btn-pdf" onclick="window.print()">🖨️ Imprimir / PDF</button></div><div id="folha-timbrada" class="paper"><div class="paper-title">GRUPO DE LOUVOR — ICM PINHOS</div><div id="conteudo-folha" class="muted">Selecione uma data.</div></div></div>
+        <div id="box-justificativa" class="justification-box"><label>Houve justificativa?</label><div class="just-row"><button id="j-sim" onclick="selecionarJustificativa('sim')">Sim</button><button id="j-nao" class="active" onclick="selecionarJustificativa('nao')">Não</button></div><input id="input-motivo" placeholder="Motivo (opcional)"></div>
+        <button class="btn-main" onclick="adicionarAvulso()">➕ Adicionar e salvar</button>
+      </details>
     </div>
 
-    <div id="tab-dashboard" class="tab-content no-print"><h2>Dashboard de Frequência</h2><label>Mês</label><input type="month" id="mes-dashboard" onchange="carregarDashboard()"><div id="conteudo-dashboard" style="margin-top:12px" class="muted">Carregando...</div></div>
+    <div class="card no-print">
+      <h2>Registro salvo da data</h2>
+      <div class="counter"><span>P: <span id="cnt-p">0</span></span><span>A: <span id="cnt-a">0</span></span><span>F: <span id="cnt-f">0</span></span></div>
+      <div id="lista-chamada-salva" class="muted center">Nenhum registro.</div>
+    </div>
 
-    <div id="tab-membros" class="tab-content no-print"><h2>Integrantes do Louvor</h2><div id="admin-member-tools"><label>Novo integrante</label><input type="text" id="novo-nome" placeholder="Nome completo"><button class="btn-main" onclick="cadastrarMembro()">💾 Salvar integrante</button></div><div id="member-permission-note" class="muted" style="display:none;margin:10px 0">Somente o administrador pode cadastrar ou excluir integrantes.</div><h2>Cadastrados <span id="total-membros-badge">(0)</span></h2><div id="lista-membros-cadastrados" class="loading">Carregando...</div></div>
+    <div class="card">
+      <h2>Relatório</h2>
+      <div class="grid2 no-print"><input type="month" id="mes-relatorio"><button class="btn-main" onclick="gerarRelatorioMensal()">Relatório mensal</button></div>
+      <div class="grid3 no-print"><button class="btn-main btn-img" onclick="gerarImagemECompartilhar()">📲 Imagem</button><button class="btn-main btn-wsp" onclick="enviarTextoWhatsApp()">💬 WhatsApp</button><button class="btn-main btn-pdf" onclick="window.print()">🖨️ PDF</button></div>
+      <div id="folha-timbrada" class="paper"><div class="paper-title">GRUPO DE LOUVOR — ICM PINHOS</div><div id="conteudo-folha" class="muted center">Selecione uma data.</div></div>
+    </div>
   </div>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, set, remove, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  <div id="tab-historico" class="tab-content">
+    <div class="card"><div class="section-title"><h2>Histórico de chamadas</h2><span class="badge" id="hist-total">0</span></div><div id="lista-historico" class="muted center">Carregando...</div></div>
+  </div>
 
-    const firebaseConfig={apiKey:"AIzaSyB-slUGWh8PnjW63craYa-BgTvjSoIJm2A",authDomain:"louvorapp-4f609.firebaseapp.com",databaseURL:"https://louvorapp-4f609-default-rtdb.firebaseio.com",projectId:"louvorapp-4f609",storageBucket:"louvorapp-4f609.firebasestorage.app",messagingSenderId:"358727212611",appId:"1:358727212611:web:5f3ad0c5244df153067ef6"};
-    const app=initializeApp(firebaseConfig); const db=getDatabase(app); const auth=getAuth(app);
-    window.db=db; window.dbRef=ref; window.dbSet=set; window.dbRemove=remove; window.firebaseAuth=auth; window.firebaseSignIn=signInWithEmailAndPassword; window.firebaseSignOut=signOut;
-    let unsubReg=null,unsubMem=null;
+  <div id="tab-dashboard" class="tab-content">
+    <div class="card"><h2>Dashboard de frequência</h2><label>Mês</label><input type="month" id="mes-dashboard" onchange="carregarDashboard()"><div id="conteudo-dashboard" style="margin-top:12px"></div></div>
+  </div>
 
-    function iniciarLeituras(){
-      if(unsubReg)unsubReg(); if(unsubMem)unsubMem();
-      unsubReg=onValue(ref(db,'registros_louvor'),s=>{window.todosOsDados=s.val()||{};carregarChamadaDoDia();carregarDashboard()},e=>mostrarErroBanco(e));
-      unsubMem=onValue(ref(db,'membros_louvor'),s=>{window.integrantesCadastrados=s.val()||{};renderizarListaCadastrados();carregarDashboard()},e=>mostrarErroBanco(e));
-    }
-    function mostrarErroBanco(e){console.error(e);const msg='Não foi possível acessar o Firebase. Confira login e regras do banco.';document.getElementById('lista-chamada').innerHTML='<div class="muted">'+msg+'</div>';}
-    onAuthStateChanged(auth,user=>{
-      window.usuarioAtual=user||null; window.isAdmin=!!user&&((user.email||'').toLowerCase()==='icmpinhos@gmail.com');
-      const overlay=document.getElementById('auth-overlay'),bar=document.getElementById('user-bar');
-      if(user){overlay.style.display='none';bar.style.display='flex';document.getElementById('user-info').textContent=(window.isAdmin?'Administrador • ':'Usuário • ')+(user.email||'');document.getElementById('admin-member-tools').style.display=window.isAdmin?'block':'none';document.getElementById('member-permission-note').style.display=window.isAdmin?'none':'block';iniciarLeituras();}
-      else{overlay.style.display='flex';bar.style.display='none';window.todosOsDados={};window.integrantesCadastrados={};if(unsubReg){unsubReg();unsubReg=null}if(unsubMem){unsubMem();unsubMem=null}}
-    });
-  </script>
+  <div id="tab-membros" class="tab-content">
+    <div class="card">
+      <h2>Integrantes do louvor</h2>
+      <div id="admin-member-tools" style="display:none"><label>Novo integrante</label><input id="novo-nome" placeholder="Nome completo"><button class="btn-main" onclick="cadastrarMembro()">💾 Salvar integrante</button></div>
+      <div id="member-permission-note" class="muted center">Somente o administrador pode cadastrar ou excluir integrantes.</div>
+      <div class="section-title" style="margin-top:12px"><strong>Cadastrados</strong><span class="badge" id="total-membros-badge">0</span></div><div id="lista-membros-cadastrados"></div>
+    </div>
+  </div>
 
-  <script>
-    window.todosOsDados={}; window.integrantesCadastrados={}; window.usuarioAtual=null; window.isAdmin=false;
-    let statusSelecionado='presente',justificativaSelecionada='nao',tipoRelatorioAtual='diario';
-    const hoje=new Date().toISOString().slice(0,10); document.getElementById('ensaio-data').value=hoje; document.getElementById('mes-relatorio').value=hoje.slice(0,7); document.getElementById('mes-dashboard').value=hoje.slice(0,7);
-    if(localStorage.getItem('louvor_theme')==='dark')document.body.classList.add('dark-mode');
+  <div id="tab-config" class="tab-content">
+    <div class="card admin-only">
+      <h2>Backup e restauração</h2>
+      <p class="muted">O backup inclui membros, chamadas e metadados do app.</p>
+      <button class="btn-main" onclick="baixarBackup()">⬇️ Baixar backup JSON</button>
+      <div class="danger-note">Restaurar substitui os membros e as chamadas atuais pelos dados do arquivo. Faça um backup antes.</div>
+      <input id="arquivo-backup" type="file" accept=".json,application/json"><button class="btn-main btn-danger" onclick="restaurarBackup()">♻️ Restaurar backup</button>
+    </div>
+    <div class="card admin-only">
+      <h2>Perfis e permissões</h2>
+      <p class="muted">Administrador: tudo. Responsável: chamada/relatórios. Visualização: somente consulta.</p>
+      <div id="lista-perfis" class="muted center">As regras avançadas do Firebase precisam estar publicadas para gerenciar perfis.</div>
+    </div>
+    <div class="card admin-only">
+      <h2>Registro de alterações</h2>
+      <div id="lista-auditoria" class="muted center">As regras avançadas do Firebase precisam estar publicadas para exibir auditoria.</div>
+    </div>
+  </div>
+</div>
 
-    async function entrarNoApp(){const usuario=document.getElementById('login-usuario').value.trim();const senha=document.getElementById('login-senha').value;const erro=document.getElementById('login-erro');erro.textContent='';if(!usuario||!senha){erro.textContent='Informe usuário e senha.';return}const u=usuario.toLowerCase();const email=u==='admin'?'icmpinhos@gmail.com':(usuario.includes('@')?usuario:`${u}@frequencia-icm.app`);try{await window.firebaseSignIn(window.firebaseAuth,email,senha);document.getElementById('login-senha').value=''}catch(e){console.error(e);erro.textContent='Usuário ou senha inválidos.'}}
-    async function sairDoApp(){try{await window.firebaseSignOut(window.firebaseAuth)}catch(e){console.error(e)}}
-    function alternarTema(){const d=document.body.classList.toggle('dark-mode');localStorage.setItem('louvor_theme',d?'dark':'light')}
-    function alternarAba(nome,btn){document.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.tab-content').forEach(x=>x.classList.remove('active'));btn.classList.add('active');document.getElementById('tab-'+nome).classList.add('active');if(nome==='dashboard')carregarDashboard()}
-    function selecionarOpcao(s){statusSelecionado=s;['p','a','f'].forEach(x=>document.getElementById('lbl-'+x).className='status-btn');document.getElementById('lbl-'+(s==='presente'?'p':s==='atrasado'?'a':'f')).classList.add(s==='presente'?'selected-p':s==='atrasado'?'selected-a':'selected-f');document.getElementById('box-justificativa').style.display=s==='presente'?'none':'block'}
-    function selecionarJustificativa(v){justificativaSelecionada=v;document.getElementById('j-sim').classList.toggle('active',v==='sim');document.getElementById('j-nao').classList.toggle('active',v==='nao')}
-    function listaMembros(){return Object.values(window.integrantesCadastrados||{}).map(m=>m.nome).filter(Boolean).sort((a,b)=>a.localeCompare(b,'pt-BR'))}
-    function buscarSugestoes(){const termo=document.getElementById('input-busca').value.trim().toLowerCase(),box=document.getElementById('sugestoes');if(!termo){box.style.display='none';return}const arr=listaMembros().filter(n=>n.toLowerCase().includes(termo));box.innerHTML=arr.length?arr.map(n=>`<div class="suggestion" onclick='selecionarSugestao(${JSON.stringify(n)})'>${esc(n)}</div>`).join(''):'<div class="suggestion muted">Nenhum integrante encontrado.</div>';box.style.display='block'}
-    function selecionarSugestao(n){document.getElementById('input-busca').value=n;document.getElementById('sugestoes').style.display='none'}
-    function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-    function chaveNome(nome){return nome.replace(/[.#$\[\]]/g,'_')}
-    async function adicionarEAutoSalvar(){if(!window.usuarioAtual){alert('Faça login.');return}const nome=document.getElementById('input-busca').value.trim(),data=document.getElementById('ensaio-data').value,motivo=document.getElementById('input-motivo').value.trim();if(!nome||!data){alert('Informe nome e data.');return}try{await window.dbSet(window.dbRef(window.db,`registros_louvor/${data}/${chaveNome(nome)}`),{nome,status:statusSelecionado,justificado:statusSelecionado==='presente'?'nao':justificativaSelecionada,motivo:statusSelecionado==='presente'?'':motivo});document.getElementById('input-busca').value='';document.getElementById('input-motivo').value='';document.getElementById('sugestoes').style.display='none'}catch(e){console.error(e);alert('Não foi possível salvar. Verifique as permissões do Firebase.') }}
-    async function removerDoFirebase(nome){if(!confirm(`Remover ${nome} desta chamada?`))return;try{await window.dbRemove(window.dbRef(window.db,`registros_louvor/${document.getElementById('ensaio-data').value}/${chaveNome(nome)}`))}catch(e){alert('Não foi possível remover.')}}
-    function carregarChamadaDoDia(){tipoRelatorioAtual='diario';const data=document.getElementById('ensaio-data').value,obj=(window.todosOsDados||{})[data]||{},itens=Object.values(obj);let p=0,a=0,f=0;const lista=document.getElementById('lista-chamada');if(!window.usuarioAtual)return;if(!itens.length){lista.innerHTML='<div class="muted">Nenhum membro registrado para esta data.</div>';document.getElementById('conteudo-folha').innerHTML=`<div class="muted">Sem registros para ${formatData(data)}.</div>`}else{lista.innerHTML=itens.map(m=>{let c='card-p',t='Presente',tag='tag-p';if(m.status==='atrasado'){a++;c='card-a';t='Atrasado';tag='tag-a'}else if(m.status==='ausente'){f++;c='card-f';t='FALTOU';tag='tag-f'}else p++;return `<div class="member-card ${c}"><span><strong>${esc(m.nome)}</strong>${m.motivo?`<br><small>${esc(m.motivo)}</small>`:''}</span><div><span class="tag ${tag}">${t}</span><button class="del" onclick='removerDoFirebase(${JSON.stringify(m.nome)})'>✕</button></div></div>`}).join('');gerarFolhaDiaria(data,itens)}document.getElementById('cnt-p').textContent=p;document.getElementById('cnt-a').textContent=a;document.getElementById('cnt-f').textContent=f}
-    function gerarFolhaDiaria(data,itens){let p=0,a=0,f=0;let rows=itens.map(m=>{let t='Presente',cl='row-presente',det='-';if(m.status==='atrasado'){a++;t='Atrasado';cl='row-atrasado';det=m.justificado==='sim'?'Justificado'+(m.motivo?': '+m.motivo:''):'Sem justificativa'}else if(m.status==='ausente'){f++;t='Faltou';cl='row-ausente';det=m.justificado==='sim'?'Justificado'+(m.motivo?': '+m.motivo:''):'Sem justificativa'}else p++;return `<tr class="${cl}"><td>${esc(m.nome)}</td><td>${t}</td><td>${esc(det)}</td></tr>`}).join('');document.getElementById('conteudo-folha').innerHTML=`<div class="paper-title">Relatório de Ensaio — ${formatData(data)}</div><table class="report-table"><thead><tr><th>Membro</th><th>Status</th><th>Detalhes</th></tr></thead><tbody>${rows}</tbody></table><div style="text-align:right;margin-top:10px"><strong>P:</strong> ${p} | <strong>A:</strong> ${a} | <strong>F:</strong> ${f}</div>`}
-    function gerarRelatorioMensal(){tipoRelatorioAtual='mensal';const mes=document.getElementById('mes-relatorio').value,datas=Object.keys(window.todosOsDados||{}).filter(d=>d.startsWith(mes)).sort();if(!datas.length){document.getElementById('conteudo-folha').innerHTML='<div class="muted">Sem registros neste mês.</div>';return}let html=`<div class="paper-title">Relatório Mensal — ${mes.split('-').reverse().join('/')}</div>`;datas.forEach(d=>{const itens=Object.values(window.todosOsDados[d]||{});html+=`<h3 style="margin:12px 0 6px">${formatData(d)}</h3><table class="report-table"><thead><tr><th>Membro</th><th>Status</th></tr></thead><tbody>${itens.map(m=>`<tr><td>${esc(m.nome)}</td><td>${m.status==='presente'?'Presente':m.status==='atrasado'?'Atrasado':'Faltou'}</td></tr>`).join('')}</tbody></table>`});document.getElementById('conteudo-folha').innerHTML=html}
-    function carregarDashboard(){if(!window.usuarioAtual)return;const mes=document.getElementById('mes-dashboard').value,datas=Object.keys(window.todosOsDados||{}).filter(d=>d.startsWith(mes)),map={};datas.forEach(d=>Object.values(window.todosOsDados[d]||{}).forEach(m=>{map[m.nome]??={p:0,a:0,f:0};if(m.status==='presente')map[m.nome].p++;else if(m.status==='atrasado')map[m.nome].a++;else map[m.nome].f++}));const total=listaMembros().length;let pres=0,atr=0,fal=0;Object.values(map).forEach(x=>{pres+=x.p;atr+=x.a;fal+=x.f});let html=`<div class="dash-grid"><div class="dash-card"><strong>${datas.length}</strong>Chamadas</div><div class="dash-card"><strong>${total}</strong>Membros</div><div class="dash-card"><strong>${pres}</strong>Presenças</div></div>`;const nomes=Object.keys(map).sort((a,b)=>a.localeCompare(b,'pt-BR'));if(nomes.length)html+=`<table class="report-table"><thead><tr><th>Membro</th><th>P</th><th>A</th><th>F</th></tr></thead><tbody>${nomes.map(n=>`<tr><td>${esc(n)}</td><td>${map[n].p}</td><td>${map[n].a}</td><td>${map[n].f}</td></tr>`).join('')}</tbody></table>`;else html+='<div class="muted">Sem registros neste mês.</div>';document.getElementById('conteudo-dashboard').innerHTML=html}
-    async function cadastrarMembro(){if(!window.isAdmin){alert('Somente o administrador pode cadastrar integrantes.');return}const nome=document.getElementById('novo-nome').value.trim();if(!nome){alert('Digite o nome.');return}try{await window.dbSet(window.dbRef(window.db,`membros_louvor/${chaveNome(nome)}`),{nome});document.getElementById('novo-nome').value=''}catch(e){console.error(e);alert('Não foi possível cadastrar.')}}
-    async function removerMembro(nome){if(!window.isAdmin)return;if(!confirm(`Excluir ${nome} do cadastro? As chamadas antigas serão mantidas.`))return;try{await window.dbRemove(window.dbRef(window.db,`membros_louvor/${chaveNome(nome)}`))}catch(e){alert('Não foi possível excluir.')}}
-    function renderizarListaCadastrados(){const arr=listaMembros();document.getElementById('total-membros-badge').textContent=`(${arr.length})`;document.getElementById('lista-membros-cadastrados').innerHTML=arr.length?arr.map(n=>`<div class="manage-item"><strong>${esc(n)}</strong>${window.isAdmin?`<button class="del" onclick='removerMembro(${JSON.stringify(n)})'>✕</button>`:''}</div>`).join(''):'<div class="muted">Nenhum integrante cadastrado.</div>'}
-    function formatData(d){if(!d)return'';const [a,m,di]=d.split('-');return `${di}/${m}/${a}`}
-    async function gerarImagemECompartilhar(){const el=document.getElementById('folha-timbrada');try{const canvas=await html2canvas(el,{backgroundColor:'#fff',scale:2});canvas.toBlob(async blob=>{const file=new File([blob],'relatorio-louvor.png',{type:'image/png'});if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'Relatório Grupo de Louvor'})}else{const a=document.createElement('a');a.href=canvas.toDataURL('image/png');a.download='relatorio-louvor.png';a.click()}},'image/png')}catch(e){alert('Não foi possível gerar a imagem.')}}
-    function enviarTextoWhatsApp(){const data=document.getElementById('ensaio-data').value,itens=Object.values((window.todosOsDados||{})[data]||{});if(!itens.length){alert('Sem registros nesta data.');return}let txt=`*Grupo de Louvor - ICM PINHOS*\n*${formatData(data)}*\n\n`;itens.forEach(m=>txt+=`${m.status==='presente'?'✅':m.status==='atrasado'?'🟡':'❌'} ${m.nome} - ${m.status==='presente'?'Presente':m.status==='atrasado'?'Atrasado':'Faltou'}${m.motivo?' ('+m.motivo+')':''}\n`);window.open('https://wa.me/?text='+encodeURIComponent(txt),'_blank')}
-  </script>
+<script src="app-core.js"></script>
+<script src="app-reports.js"></script>
+<script src="app-admin.js"></script>
+<script src="app-share.js"></script>
+<script type="module" src="firebase.js"></script>
 </body>
 </html>
