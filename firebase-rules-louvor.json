@@ -1,0 +1,52 @@
+{
+  "rules": {
+    "registros_louvor": {
+      ".read": "auth != null",
+      ".write": "auth != null && (auth.token.email == 'icmpinhos@gmail.com' || !root.child('roles_louvor').child(auth.uid).exists() || root.child('roles_louvor').child(auth.uid).val() == 'responsavel')",
+      "$data": {
+        "$pessoa": {
+          ".validate": "!newData.exists() || (newData.hasChildren(['nome','status']) && newData.child('nome').isString() && newData.child('nome').val().length > 0 && newData.child('nome').val().length <= 120 && (newData.child('status').val() == 'presente' || newData.child('status').val() == 'atrasado' || newData.child('status').val() == 'ausente'))"
+        }
+      }
+    },
+    "membros_louvor": {
+      ".read": "auth != null",
+      ".write": "auth != null && auth.token.email == 'icmpinhos@gmail.com'",
+      "$membro": {
+        ".validate": "!newData.exists() || (newData.hasChild('nome') && newData.child('nome').isString() && newData.child('nome').val().length > 0 && newData.child('nome').val().length <= 120)"
+      }
+    },
+    "perfis_louvor": {
+      "$uid": {
+        ".read": "auth != null && (auth.uid == $uid || auth.token.email == 'icmpinhos@gmail.com')",
+        ".write": "auth != null && (auth.uid == $uid || auth.token.email == 'icmpinhos@gmail.com')",
+        ".validate": "!newData.exists() || (newData.child('email').isString() && (auth.token.email == 'icmpinhos@gmail.com' || newData.child('email').val() == auth.token.email))"
+      }
+    },
+    "roles_louvor": {
+      "$uid": {
+        ".read": "auth != null && (auth.uid == $uid || auth.token.email == 'icmpinhos@gmail.com')",
+        ".write": "auth != null && auth.token.email == 'icmpinhos@gmail.com'",
+        ".validate": "!newData.exists() || newData.val() == 'responsavel' || newData.val() == 'visualizacao'"
+      }
+    },
+    "auditoria_louvor": {
+      ".read": "auth != null && auth.token.email == 'icmpinhos@gmail.com'",
+      "$id": {
+        ".write": "auth != null && !data.exists() && newData.child('uid').val() == auth.uid",
+        ".validate": "newData.hasChildren(['uid','email','acao','detalhe','quando'])"
+      }
+    },
+    "cultos_app": {
+      "membros": { ".read": "auth != null", ".write": "auth != null && auth.token.email == 'icmpinhos@gmail.com'" },
+      "atual": { ".read": "auth != null", ".write": "auth != null" },
+      "registros": { ".read": "auth != null && auth.token.email == 'icmpinhos@gmail.com'", ".write": "auth != null && auth.token.email == 'icmpinhos@gmail.com'" },
+      "pendentes": {
+        ".read": "auth != null && auth.token.email == 'icmpinhos@gmail.com'",
+        "$cultoId": { ".write": "auth != null && (auth.token.email == 'icmpinhos@gmail.com' || newData.exists())" }
+      },
+      "config": { ".read": "auth != null && auth.token.email == 'icmpinhos@gmail.com'", ".write": "auth != null && auth.token.email == 'icmpinhos@gmail.com'" },
+      "$other": { ".read": false, ".write": false }
+    }
+  }
+}
