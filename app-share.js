@@ -39,9 +39,13 @@ async function compartilharDashboardImagem(){
 function compartilharDashboardWhatsApp(){
   const mes=document.getElementById('mes-dashboard').value,d=dadosDashboard(mes),nomes=Object.keys(d.map).sort((a,b)=>a.localeCompare(b,'pt-BR'));
   if(!nomes.length)return alert('Sem registros neste mês.');
-  const periodo=mes.split('-').reverse().join('/');
+  const periodo=mes.split('-').reverse().join('/'),ant=dadosDashboard(mesAnterior(mes)),dif=d.taxa-ant.taxa;
   let txt=`*GRUPO DE LOUVOR - ICM PINHOS*\n*Relatório Geral de Presenças - ${periodo}*\n\n`;
-  txt+=`Chamadas: ${d.datas.length}\nPresenças: ${d.pres}\nAtrasos: ${d.atr}\nFaltas: ${d.fal}\nTaxa geral: ${d.taxa}%\n\n*Frequência por integrante*\n`;
+  txt+=`Chamadas: ${d.datas.length}\nPresenças: ${d.pres}\nAtrasos: ${d.atr}\nFaltas: ${d.fal}\nTaxa geral: ${d.taxa}%\n`;
+  if(ant.totalReg)txt+=`Comparativo mês anterior: ${ant.taxa}% → ${d.taxa}% (${dif>0?'+':''}${dif} p.p.)\n`;
+  const ranking=Object.entries(d.map).map(([nome,x])=>({nome,pct:x.total?Math.round(x.p/x.total*100):0,p:x.p})).sort((a,b)=>b.pct-a.pct||b.p-a.p||a.nome.localeCompare(b.nome,'pt-BR')).slice(0,3);
+  if(ranking.length){txt+='\n*Destaques de frequência*\n';ranking.forEach((x,i)=>txt+=`${i+1}º ${x.nome} - ${x.pct}%\n`)}
+  txt+='\n*Frequência por integrante*\n';
   nomes.forEach(n=>{const x=d.map[n],pct=x.total?Math.round((x.p/x.total)*100):0;txt+=`${n}: ${pct}% | P ${x.p} | A ${x.a} | F ${x.f}\n`});
   abrirLinkCompartilhamento('https://wa.me/?text='+encodeURIComponent(txt));
 }
