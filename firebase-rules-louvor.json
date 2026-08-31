@@ -17,15 +17,17 @@
       }
     },
     "perfis_louvor": {
+      ".read": "auth != null && auth.token.email == 'icmpinhos@gmail.com'",
       "$uid": {
-        ".read": "auth != null && (auth.uid == $uid || auth.token.email == 'icmpinhos@gmail.com')",
+        ".read": "auth != null && auth.uid == $uid",
         ".write": "auth != null && (auth.uid == $uid || auth.token.email == 'icmpinhos@gmail.com')",
         ".validate": "!newData.exists() || (newData.child('email').isString() && (auth.token.email == 'icmpinhos@gmail.com' || newData.child('email').val() == auth.token.email))"
       }
     },
     "roles_louvor": {
+      ".read": "auth != null && auth.token.email == 'icmpinhos@gmail.com'",
       "$uid": {
-        ".read": "auth != null && (auth.uid == $uid || auth.token.email == 'icmpinhos@gmail.com')",
+        ".read": "auth != null && auth.uid == $uid",
         ".write": "auth != null && auth.token.email == 'icmpinhos@gmail.com'",
         ".validate": "!newData.exists() || newData.val() == 'responsavel' || newData.val() == 'visualizacao'"
       }
