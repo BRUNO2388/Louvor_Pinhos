@@ -76,7 +76,17 @@
   </div>
 
   <div id="tab-dashboard" class="tab-content">
-    <div class="card"><h2>Dashboard de frequência</h2><label>Mês</label><input type="month" id="mes-dashboard" onchange="carregarDashboard()"><div id="conteudo-dashboard" style="margin-top:12px"></div></div>
+    <div class="card">
+      <h2>Dashboard de frequência</h2>
+      <label>Mês</label><input type="month" id="mes-dashboard" onchange="carregarDashboard()">
+      <div id="conteudo-dashboard" style="margin-top:12px"></div>
+      <div class="grid3 no-print" style="margin-top:12px">
+        <button class="btn-main btn-img" onclick="compartilharDashboardImagem()">📲 Imagem</button>
+        <button class="btn-main btn-wsp" onclick="compartilharDashboardWhatsApp()">💬 WhatsApp</button>
+        <button class="btn-main btn-pdf" onclick="imprimirDashboard()">🖨️ PDF</button>
+      </div>
+      <div id="relatorio-geral-dashboard" class="paper" style="margin-top:14px"><div class="paper-title">RELATÓRIO GERAL DE PRESENÇAS</div><div id="conteudo-relatorio-geral" class="muted center">Selecione um mês.</div></div>
+    </div>
   </div>
 
   <div id="tab-membros" class="tab-content">
