@@ -4,1066 +4,130 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Grupo de Louvor - ICM PINHOS</title>
-
-  <!-- Configurações PWA / App para Celular -->
   <meta name="theme-color" content="#1a2a6c">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Louvor PINHOS">
-  <meta name="application-name" content="Louvor PINHOS">
-
-  <!-- Ícone SVG direto no HTML -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231a2a6c'/><text x='50%' y='40%' font-family='sans-serif' font-weight='bold' font-size='18' fill='%23ffffff' text-anchor='middle'>ICM</text><text x='50%' y='70%' font-family='sans-serif' font-weight='bold' font-size='14' fill='%23b81d24' text-anchor='middle'>PINHOS</text></svg>">
-  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231a2a6c'/><text x='50%' y='40%' font-family='sans-serif' font-weight='bold' font-size='18' fill='%23ffffff' text-anchor='middle'>ICM</text><text x='50%' y='70%' font-family='sans-serif' font-weight='bold' font-size='14' fill='%23b81d24' text-anchor='middle'>PINHOS</text></svg>">
-
   <link rel="manifest" href="manifest.json">
-
-  <!-- Biblioteca para converter HTML em Imagem para o WhatsApp -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Cinzel:wght@700&family=Montserrat:wght@800;900&display=swap');
-
-    :root {
-      --bg-body: #f4f6f9;
-      --bg-container: #ffffff;
-      --text-main: #333333;
-      --border-color: #ccc;
-      --card-bg: #f8f9fa;
-    }
-
-    body.dark-mode {
-      --bg-body: #121212;
-      --bg-container: #1e1e1e;
-      --text-main: #e0e0e0;
-      --border-color: #444444;
-      --card-bg: #2a2a2a;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    body {
-      background-color: var(--bg-body);
-      color: var(--text-main);
-      padding: 15px;
-      display: flex;
-      justify-content: center;
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 580px;
-      background: var(--bg-container);
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-      position: relative;
-    }
-
-    /* BOTÃO MODO ESCURO / CLARO */
-    .theme-toggle-btn {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      background: rgba(255, 255, 255, 0.2);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: bold;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      z-index: 10;
-    }
-
-    /* ESTILIZAÇÃO DA LOGO DO GRUPO DE LOUVOR */
-    .logo-box {
-      background: linear-gradient(180deg, #b0c4de 0%, #dbe6f6 50%, #f0f4f8 100%);
-      border-radius: 12px;
-      padding: 25px 15px 20px 15px;
-      text-align: center;
-      position: relative;
-      margin-bottom: 20px;
-      box-shadow: inset 0 0 15px rgba(0,0,0,0.05), 0 4px 10px rgba(0,0,0,0.1);
-      border: 1px solid #cbd5e1;
-    }
-
-    .logo-title-1 {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 900;
-      font-size: 2.2rem;
-      color: #0022cc;
-      letter-spacing: 2px;
-      line-height: 1;
-      text-transform: uppercase;
-    }
-
-    .logo-title-2 {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 900;
-      font-size: 2.2rem;
-      color: #000839;
-      letter-spacing: 2px;
-      line-height: 1.1;
-      margin-bottom: 12px;
-      text-transform: uppercase;
-    }
-
-    .logo-watermark-im {
-      font-family: 'Caveat', cursive;
-      font-size: 2.5rem;
-      color: #b81d24;
-      opacity: 0.35;
-      line-height: 0.5;
-      margin-top: 5px;
-      margin-bottom: -15px;
-    }
-
-    .logo-igreja {
-      font-family: 'Cinzel', serif;
-      font-weight: 700;
-      font-size: 1.05rem;
-      color: #b81d24;
-      letter-spacing: 2.5px;
-      margin-top: 10px;
-      text-transform: uppercase;
-    }
-
-    .logo-bairro {
-      font-family: 'Cinzel', serif;
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: #b81d24;
-      letter-spacing: 4px;
-      margin-top: 2px;
-      text-transform: uppercase;
-    }
-
-    .logo-musical-note {
-      font-size: 2.2rem;
-      color: #3a3a3a;
-      margin-top: 8px;
-      display: inline-block;
-      line-height: 1;
-    }
-
-    /* NAV TABS */
-    .nav-tabs {
-      display: flex;
-      gap: 4px;
-      margin-bottom: 20px;
-      border-bottom: 2px solid #000839;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .tab-btn {
-      flex: 1;
-      padding: 10px 6px;
-      border: none;
-      background: var(--card-bg);
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 0.82rem;
-      border-radius: 6px 6px 0 0;
-      color: var(--text-main);
-      white-space: nowrap;
-    }
-
-    .tab-btn.active {
-      background: #000839;
-      color: white;
-    }
-
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
-
-    h2 {
-      font-size: 1rem;
-      color: #000839;
-      border-bottom: 2px solid #000839;
-      padding-bottom: 5px;
-      margin-top: 15px;
-      text-align: center;
-      margin-bottom: 15px;
-    }
-
-    .section { margin-bottom: 20px; }
-
-    label {
-      font-size: 0.85rem;
-      font-weight: bold;
-      color: #000839;
-      display: block;
-      margin-bottom: 5px;
-    }
-
-    body.dark-mode label { color: #8ab4f8; }
-
-    input[type="date"], input[type="month"], input[type="text"] {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid var(--border-color);
-      background: var(--bg-container);
-      color: var(--text-main);
-      border-radius: 8px;
-      font-size: 0.95rem;
-      outline: none;
-    }
-
-    .search-container {
-      position: relative;
-      margin-bottom: 10px;
-    }
-
-    .suggestions-list {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background: var(--bg-container);
-      border: 1px solid #000839;
-      border-radius: 0 0 8px 8px;
-      max-height: 180px;
-      overflow-y: auto;
-      z-index: 1000;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      display: none;
-    }
-
-    .suggestion-item {
-      padding: 10px;
-      cursor: pointer;
-      border-bottom: 1px solid var(--border-color);
-      font-size: 0.9rem;
-      color: var(--text-main);
-    }
-
-    .suggestion-item:hover {
-      background-color: #e8ecef;
-      color: #000839;
-      font-weight: bold;
-    }
-
-    .status-selector {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-
-    .status-btn {
-      flex: 1;
-      padding: 10px;
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      background: var(--card-bg);
-      color: var(--text-main);
-      cursor: pointer;
-      text-align: center;
-      font-size: 0.85rem;
-      font-weight: bold;
-    }
-
-    .status-btn.selected-p { background-color: #d4edda; border-color: #28a745; color: #155724; }
-    .status-btn.selected-a { background-color: #fff3cd; border-color: #ffc107; color: #856404; }
-    .status-btn.selected-f { background-color: #f8d7da; border-color: #dc3545; color: #721c24; }
-
-    /* BLOCO DE JUSTIFICATIVA */
-    .justification-box {
-      background: var(--card-bg);
-      border: 1px dashed var(--border-color);
-      padding: 10px;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      display: none;
-    }
-
-    .justification-options {
-      display: flex;
-      gap: 10px;
-      margin-top: 5px;
-      margin-bottom: 8px;
-    }
-
-    .just-btn {
-      flex: 1;
-      padding: 6px;
-      font-size: 0.8rem;
-      font-weight: bold;
-      border-radius: 4px;
-      border: 1px solid var(--border-color);
-      background: var(--bg-container);
-      color: var(--text-main);
-      cursor: pointer;
-      text-align: center;
-    }
-
-    .just-btn.selected-yes { background: #d1ecf1; border-color: #17a2b8; color: #0c5460; }
-    .just-btn.selected-no  { background: #f8d7da; border-color: #dc3545; color: #721c24; }
-
-    button.btn-main {
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      background-color: #000839;
-      color: white;
-      font-size: 0.95rem;
-      margin-bottom: 8px;
-    }
-
-    button.btn-main:hover { background-color: #001f54; }
-    .btn-wsp { background-color: #25d366 !important; color: #fff !important; }
-    .btn-img { background-color: #007bff !important; color: #fff !important; }
-    .btn-pdf { background-color: #6c757d !important; color: #fff !important; }
-
-    .member-card {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 12px;
-      background: var(--card-bg);
-      color: var(--text-main);
-      border-left: 5px solid #ccc;
-      border-radius: 6px;
-      margin-bottom: 8px;
-      font-size: 0.9rem;
-    }
-
-    .card-p { border-left-color: #28a745; }
-    .card-a { border-left-color: #ffc107; }
-    .card-f { border-left-color: #dc3545; }
-
-    .tag-status {
-      font-size: 0.75rem;
-      font-weight: bold;
-      padding: 3px 8px;
-      border-radius: 4px;
-    }
-
-    .tag-p { background: #d4edda; color: #155724; }
-    .tag-a { background: #fff3cd; color: #856404; }
-    .tag-f { background: #dc3545; color: #ffffff; }
-    .tag-just { font-size: 0.7rem; background: #e2e3e5; color: #383d41; padding: 2px 5px; border-radius: 3px; margin-left: 4px; }
-
-    .btn-del {
-      background: none;
-      border: none;
-      color: #dc3545;
-      font-weight: bold;
-      cursor: pointer;
-      margin-left: 8px;
-      font-size: 1rem;
-    }
-
-    .counter-bar {
-      display: flex;
-      justify-content: space-around;
-      background: var(--card-bg);
-      padding: 8px;
-      border-radius: 6px;
-      font-size: 0.8rem;
-      font-weight: bold;
-      margin-bottom: 12px;
-      border: 1px solid var(--border-color);
-    }
-
-    .member-manage-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 8px; border-bottom: 1px solid var(--border-color); gap: 10px; }
-    .member-manage-info { display: flex; flex-direction: column; flex: 1; min-width: 0; }
-    .member-manage-name { font-size: 0.92rem; font-weight: 700; word-break: break-word; line-height: 1.25; }
-
-    /* ESTILO DA FOLHA TIMBRADA */
-    .paper-sheet {
-      background: #ffffff !important;
-      color: #333333 !important;
-      border: 1px solid #ccc;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
-      margin-top: 15px;
-    }
-
-    .paper-title {
-      text-align: center;
-      font-size: 1.1rem;
-      color: #000839;
-      margin-bottom: 15px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      border-bottom: 1px solid #ddd;
-      padding-bottom: 5px;
-    }
-
-    .report-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-      font-size: 0.83rem;
-      background: #ffffff;
-    }
-
-    .report-table th, .report-table td {
-      border: 1px solid #b8c2cc;
-      padding: 7px;
-      text-align: left;
-      color: #333333;
-    }
-
-    .report-table th { background-color: #000839; color: white; }
-
-    .row-presente { background-color: #e8f5e9; color: #155724; }
-    .row-atrasado { background-color: #fff8e1; color: #856404; font-weight: bold; }
-    .row-ausente  { background-color: #ffeef0; color: #721c24; font-weight: bold; }
-
-    @media print {
-      .no-print, .theme-toggle-btn { display: none !important; }
-      body { background: #fff; padding: 0; }
-      .container { box-shadow: none; width: 100%; max-width: 100%; padding: 0; }
-      .paper-sheet { border: none; box-shadow: none; padding: 0; }
-    }
+    :root{--bg:#f4f6f9;--card:#fff;--text:#333;--border:#ccd3db;--primary:#000839;--muted:#6c757d}
+    body.dark-mode{--bg:#121212;--card:#1e1e1e;--text:#e4e4e4;--border:#444;--primary:#304ffe;--muted:#aaa}
+    *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
+    body{background:var(--bg);color:var(--text);padding:15px;display:flex;justify-content:center;min-height:100vh}
+    .container{width:100%;max-width:620px;background:var(--card);padding:20px;border-radius:12px;box-shadow:0 4px 15px rgba(0,0,0,.08);position:relative}
+    .logo-box{background:linear-gradient(180deg,#b0c4de,#dbe6f6,#f0f4f8);border:1px solid #cbd5e1;border-radius:12px;padding:22px 15px;text-align:center;margin-bottom:15px;color:#000839}
+    .logo-title{font-size:1.7rem;font-weight:900;letter-spacing:2px}.logo-sub{color:#b81d24;font-weight:800;letter-spacing:2px;margin-top:5px}
+    .user-bar{display:none;align-items:center;justify-content:space-between;gap:8px;margin:0 0 12px;padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);font-size:.82rem}
+    .top-actions{display:flex;gap:6px}.small-btn{border:1px solid var(--border);background:var(--card);color:var(--text);padding:6px 9px;border-radius:7px;cursor:pointer;font-weight:700}
+    .nav-tabs{display:flex;gap:4px;margin-bottom:18px;border-bottom:2px solid var(--primary);overflow-x:auto}.tab-btn{flex:1;padding:10px 6px;border:0;background:var(--bg);color:var(--text);cursor:pointer;font-weight:800;border-radius:6px 6px 0 0;white-space:nowrap}.tab-btn.active{background:var(--primary);color:white}
+    .tab-content{display:none}.tab-content.active{display:block}.section{margin-bottom:18px}h2{font-size:1rem;color:var(--primary);border-bottom:2px solid var(--primary);padding-bottom:5px;margin:15px 0;text-align:center}
+    label{display:block;font-size:.85rem;font-weight:800;margin:6px 0 4px}input{width:100%;padding:11px;border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:8px;font-size:.95rem;outline:none}
+    button.btn-main{width:100%;padding:12px;border:0;border-radius:8px;background:var(--primary);color:#fff;font-weight:800;cursor:pointer;margin:7px 0}.btn-wsp{background:#25d366!important}.btn-img{background:#1976d2!important}.btn-pdf{background:#6c757d!important}.btn-danger{background:#b71c1c!important}
+    .status-selector{display:flex;gap:8px;margin:10px 0}.status-btn{flex:1;padding:10px;border:1px solid var(--border);border-radius:7px;text-align:center;cursor:pointer;font-size:.84rem;font-weight:800}.selected-p{background:#d4edda;color:#155724;border-color:#28a745}.selected-a{background:#fff3cd;color:#856404;border-color:#ffc107}.selected-f{background:#f8d7da;color:#721c24;border-color:#dc3545}
+    .justification-box{display:none;padding:10px;border:1px dashed var(--border);border-radius:8px;margin-bottom:10px}.just-row{display:flex;gap:8px;margin-bottom:8px}.just-row button{flex:1;padding:7px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--text);cursor:pointer}.just-row button.active{background:#d1ecf1;color:#0c5460;border-color:#17a2b8}
+    .suggestions{display:none;border:1px solid var(--primary);border-radius:7px;max-height:180px;overflow:auto;background:var(--card);position:absolute;left:0;right:0;z-index:20}.search-wrap{position:relative}.suggestion{padding:9px;border-bottom:1px solid var(--border);cursor:pointer}
+    .counter{display:flex;justify-content:space-around;background:var(--bg);border:1px solid var(--border);padding:8px;border-radius:7px;font-weight:800;margin-bottom:10px}.member-card,.manage-item{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px;border:1px solid var(--border);border-left-width:5px;border-radius:7px;margin-bottom:7px}.card-p{border-left-color:#28a745}.card-a{border-left-color:#ffc107}.card-f{border-left-color:#dc3545}.tag{font-size:.73rem;font-weight:800;padding:3px 7px;border-radius:4px}.tag-p{background:#d4edda;color:#155724}.tag-a{background:#fff3cd;color:#856404}.tag-f{background:#dc3545;color:#fff}.del{border:0;background:none;color:#c62828;font-size:1rem;font-weight:900;cursor:pointer}
+    .paper{background:#fff;color:#333;border:1px solid #ccc;padding:18px;border-radius:8px;margin-top:12px}.paper-title{text-align:center;color:#000839;font-weight:900;margin-bottom:12px}.report-table{width:100%;border-collapse:collapse;font-size:.83rem}.report-table th,.report-table td{border:1px solid #bbb;padding:6px;text-align:left}.report-table th{background:#000839;color:#fff}.row-presente{background:#e8f5e9}.row-atrasado{background:#fff8e1}.row-ausente{background:#ffeef0}
+    .dash-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}.dash-card{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px;text-align:center}.dash-card strong{display:block;font-size:1.2rem}.muted{color:var(--muted);font-size:.84rem;text-align:center}
+    .auth-overlay{position:fixed;inset:0;background:rgba(0,0,0,.72);display:flex;align-items:center;justify-content:center;padding:20px;z-index:9999}.auth-card{width:100%;max-width:390px;background:#fff;color:#222;border-radius:14px;padding:22px;box-shadow:0 12px 35px rgba(0,0,0,.35)}.auth-card h2{color:#000839;margin-top:0}.auth-card input{background:#fff;color:#222;margin-bottom:8px}.auth-error{min-height:20px;color:#b71c1c;font-size:.84rem;font-weight:700;margin-top:5px}.loading{padding:12px;text-align:center;color:var(--muted)}
+    @media print{body{padding:0;background:#fff}.container{box-shadow:none;max-width:none}.no-print,.auth-overlay,.user-bar,.nav-tabs,.logo-box{display:none!important}.tab-content{display:block!important}.paper{border:0}.section:not(:has(.paper)){display:none}}
   </style>
 </head>
 <body>
-
-  <div class="container">
-
-    <!-- BOTÃO MODO ESCURO / CLARO -->
-    <button class="theme-toggle-btn no-print" onclick="alternarTema()">
-      <span id="theme-icon">🌙</span> <span id="theme-text">Escuro</span>
-    </button>
-
-    <!-- CABEÇALHO REPLICADO DA LOGO DA FOTO -->
-    <div class="logo-box">
-      <div class="logo-title-1">GRUPO</div>
-      <div class="logo-title-2">DE LOUVOR</div>
-      <div class="logo-watermark-im">im</div>
-      <div class="logo-igreja">IGREJA CRISTÃ MARANATA</div>
-      <div class="logo-bairro">PINHOS</div>
-      <div class="logo-musical-note">🎼</div>
+  <div id="auth-overlay" class="auth-overlay">
+    <div class="auth-card">
+      <h2>🔐 Acesso ao Grupo de Louvor</h2>
+      <label>Usuário</label>
+      <input id="login-usuario" type="text" autocomplete="username" placeholder="Usuário ou e-mail">
+      <label>Senha</label>
+      <input id="login-senha" type="password" autocomplete="current-password" placeholder="Senha" onkeydown="if(event.key==='Enter') entrarNoApp()">
+      <button class="btn-main" onclick="entrarNoApp()">Entrar</button>
+      <div id="login-erro" class="auth-error"></div>
     </div>
-
-    <!-- NAVEGAÇÃO POR ABAS -->
-    <div class="nav-tabs no-print">
-      <button class="tab-btn active" onclick="alternarAba('ensaio')">📝 Chamada</button>
-      <button class="tab-btn" onclick="alternarAba('dashboard')">📈 Dashboard</button>
-      <button class="tab-btn" onclick="alternarAba('membros')">👥 Membros</button>
-    </div>
-
-    <!-- ABA 1: CHAMADA E RELATÓRIO DE ENSAIO -->
-    <div id="tab-ensaio" class="tab-content active">
-      <div class="section">
-        <label for="ensaio-data">Data do Ensaio (Histórico / Chamada):</label>
-        <input type="date" id="ensaio-data" onchange="carregarChamadaDoDia()">
-      </div>
-
-      <div class="section no-print">
-        <h2>Marcar Presença no Ensaio</h2>
-
-        <div class="search-container">
-          <input type="text" id="input-busca" placeholder="Digite o nome..." oninput="buscarSugestoes()" autocomplete="off">
-          <div id="sugestoes" class="suggestions-list"></div>
-        </div>
-
-        <div class="status-selector">
-          <label class="status-btn selected-p" id="lbl-p" onclick="selecionarOpcao('presente')">Presente</label>
-          <label class="status-btn" id="lbl-a" onclick="selecionarOpcao('atrasado')">Atrasado</label>
-          <label class="status-btn" id="lbl-f" onclick="selecionarOpcao('ausente')">Faltou</label>
-        </div>
-
-        <!-- CAMPO DE JUSTIFICATIVA (EXIBIDO SE ATRASADO OU FALTOSO) -->
-        <div id="box-justificativa" class="justification-box">
-          <label style="font-size: 0.8rem; margin-bottom: 2px;">Houve Justificativa?</label>
-          <div class="justification-options">
-            <div class="just-btn" id="j-sim" onclick="selecionarJustificativa('sim')">Sim</div>
-            <div class="just-btn selected-no" id="j-nao" onclick="selecionarJustificativa('nao')">Não</div>
-          </div>
-          <input type="text" id="input-motivo" placeholder="Motivo (opcional, ex: Trânsito, Trabalho...)" style="font-size: 0.85rem; padding: 8px;">
-        </div>
-
-        <button class="btn-main" onclick="adicionarEAutoSalvar()">➕ Adicionar (Salva no Firebase)</button>
-      </div>
-
-      <div class="section no-print">
-        <h2>Registro do Dia Selecionado</h2>
-
-        <div class="counter-bar">
-          <span style="color: #28a745;">P: <span id="cnt-p">0</span></span>
-          <span style="color: #856404;">A: <span id="cnt-a">0</span></span>
-          <span style="color: #dc3545; font-weight: bold;">F: <span id="cnt-f">0</span></span>
-        </div>
-
-        <div id="lista-chamada">
-          <p style="text-align: center; color: #888; font-size: 0.85rem;">Carregando...</p>
-        </div>
-      </div>
-
-      <div class="section">
-        <h2>Gerar Relatório em Folha Timbrada</h2>
-
-        <div style="display:flex; gap:8px; margin-bottom: 10px;" class="no-print">
-          <input type="month" id="mes-relatorio">
-          <button class="btn-main" style="width: auto;" onclick="gerarRelatorioMensal()">Relatório Mensal</button>
-        </div>
-
-        <div class="no-print" style="margin-bottom: 15px;">
-          <button class="btn-main btn-img" onclick="gerarImagemECompartilhar()">📲 Compartilhar Imagem no WhatsApp</button>
-          <button class="btn-main btn-wsp" onclick="enviarTextoWhatsApp()">💬 Enviar Texto Simples no WhatsApp</button>
-          <button class="btn-main btn-pdf" onclick="window.print()">🖨️ Imprimir / PDF</button>
-        </div>
-
-        <!-- FOLHA TIMBRADA -->
-        <div id="folha-timbrada" class="paper-sheet">
-          <div style="text-align:center; border-bottom: 2px solid #b81d24; padding-bottom: 10px; margin-bottom: 15px;">
-            <div style="font-family:'Montserrat', sans-serif; font-weight:900; font-size:1.2rem; color:#0022cc; letter-spacing:1px;">GRUPO DE LOUVOR</div>
-            <div style="font-family:'Cinzel', serif; font-size:0.95rem; color:#b81d24; font-weight:bold; letter-spacing:1px; margin-top:3px;">
-              IGREJA CRISTÃ MARANATA — PINHOS
-            </div>
-          </div>
-
-          <div id="conteudo-folha"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ABA 2: DASHBOARD DE FREQUÊNCIA -->
-    <div id="tab-dashboard" class="tab-content no-print">
-      <h2>Dashboard de Frequência</h2>
-      <div style="margin-bottom: 15px;">
-        <label for="mes-dashboard">Selecionar Mês:</label>
-        <input type="month" id="mes-dashboard" onchange="carregarDashboard()">
-      </div>
-      <div id="conteudo-dashboard">
-        <p style="text-align:center; color:#888;">Carregando estatísticas...</p>
-      </div>
-    </div>
-
-    <!-- ABA 3: CADASTRO DE MEMBROS -->
-    <div id="tab-membros" class="tab-content no-print">
-      <h2>Cadastrar Integrante no Louvor</h2>
-      <div style="margin-bottom: 10px;">
-        <label>Nome do Integrante:</label>
-        <input type="text" id="novo-nome" placeholder="Digite o nome completo">
-      </div>
-      <button class="btn-main" onclick="cadastrarMembro()">💾 Salvar Integrante</button>
-
-      <h2>
-        Integrantes Cadastrados 
-        <span id="total-membros-badge" style="font-size:0.85rem; background:#000839; color:#fff; padding:2px 8px; border-radius:12px; margin-left:6px;">Total: 0</span>
-      </h2>
-      <div id="lista-membros-cadastrados"></div>
-    </div>
-
   </div>
 
-  <!-- CONEXÃO FIREBASE -->
+  <div class="container">
+    <div class="logo-box"><div class="logo-title">GRUPO DE LOUVOR</div><div class="logo-sub">IGREJA CRISTÃ MARANATA — PINHOS</div></div>
+    <div id="user-bar" class="user-bar no-print"><span id="user-info"></span><div class="top-actions"><button class="small-btn" onclick="alternarTema()">🌙 Tema</button><button class="small-btn" onclick="sairDoApp()">Sair</button></div></div>
+
+    <div class="nav-tabs no-print">
+      <button class="tab-btn active" onclick="alternarAba('ensaio',this)">📝 Chamada</button>
+      <button class="tab-btn" onclick="alternarAba('dashboard',this)">📈 Dashboard</button>
+      <button class="tab-btn" onclick="alternarAba('membros',this)">👥 Membros</button>
+    </div>
+
+    <div id="tab-ensaio" class="tab-content active">
+      <div class="section no-print"><label>Data do Ensaio / Chamada</label><input type="date" id="ensaio-data" onchange="carregarChamadaDoDia()"></div>
+      <div class="section no-print">
+        <h2>Marcar Presença</h2>
+        <div class="search-wrap"><input id="input-busca" type="text" placeholder="Digite o nome..." oninput="buscarSugestoes()" autocomplete="off"><div id="sugestoes" class="suggestions"></div></div>
+        <div class="status-selector"><div id="lbl-p" class="status-btn selected-p" onclick="selecionarOpcao('presente')">Presente</div><div id="lbl-a" class="status-btn" onclick="selecionarOpcao('atrasado')">Atrasado</div><div id="lbl-f" class="status-btn" onclick="selecionarOpcao('ausente')">Faltou</div></div>
+        <div id="box-justificativa" class="justification-box"><label>Houve justificativa?</label><div class="just-row"><button id="j-sim" onclick="selecionarJustificativa('sim')">Sim</button><button id="j-nao" class="active" onclick="selecionarJustificativa('nao')">Não</button></div><input id="input-motivo" type="text" placeholder="Motivo (opcional)"></div>
+        <button class="btn-main" onclick="adicionarEAutoSalvar()">➕ Adicionar e salvar</button>
+      </div>
+      <div class="section no-print"><h2>Registro do Dia Selecionado</h2><div class="counter"><span>P: <span id="cnt-p">0</span></span><span>A: <span id="cnt-a">0</span></span><span>F: <span id="cnt-f">0</span></span></div><div id="lista-chamada" class="loading">Faça login para carregar.</div></div>
+      <div class="section"><h2>Relatório</h2><div class="no-print" style="display:flex;gap:8px"><input type="month" id="mes-relatorio"><button class="btn-main" style="width:auto" onclick="gerarRelatorioMensal()">Mensal</button></div><div class="no-print"><button class="btn-main btn-img" onclick="gerarImagemECompartilhar()">📲 Compartilhar imagem</button><button class="btn-main btn-wsp" onclick="enviarTextoWhatsApp()">💬 WhatsApp texto</button><button class="btn-main btn-pdf" onclick="window.print()">🖨️ Imprimir / PDF</button></div><div id="folha-timbrada" class="paper"><div class="paper-title">GRUPO DE LOUVOR — ICM PINHOS</div><div id="conteudo-folha" class="muted">Selecione uma data.</div></div></div>
+    </div>
+
+    <div id="tab-dashboard" class="tab-content no-print"><h2>Dashboard de Frequência</h2><label>Mês</label><input type="month" id="mes-dashboard" onchange="carregarDashboard()"><div id="conteudo-dashboard" style="margin-top:12px" class="muted">Carregando...</div></div>
+
+    <div id="tab-membros" class="tab-content no-print"><h2>Integrantes do Louvor</h2><div id="admin-member-tools"><label>Novo integrante</label><input type="text" id="novo-nome" placeholder="Nome completo"><button class="btn-main" onclick="cadastrarMembro()">💾 Salvar integrante</button></div><div id="member-permission-note" class="muted" style="display:none;margin:10px 0">Somente o administrador pode cadastrar ou excluir integrantes.</div><h2>Cadastrados <span id="total-membros-badge">(0)</span></h2><div id="lista-membros-cadastrados" class="loading">Carregando...</div></div>
+  </div>
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getDatabase, ref, set, remove, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyB-slUGWh8PnjW63craYa-BgTvjSoIJm2A",
-      authDomain: "louvorapp-4f609.firebaseapp.com",
-      databaseURL: "https://louvorapp-4f609-default-rtdb.firebaseio.com",
-      projectId: "louvorapp-4f609",
-      storageBucket: "louvorapp-4f609.firebasestorage.app",
-      messagingSenderId: "358727212611",
-      appId: "1:358727212611:web:5f3ad0c5244df153067ef6"
-    };
+    const firebaseConfig={apiKey:"AIzaSyB-slUGWh8PnjW63craYa-BgTvjSoIJm2A",authDomain:"louvorapp-4f609.firebaseapp.com",databaseURL:"https://louvorapp-4f609-default-rtdb.firebaseio.com",projectId:"louvorapp-4f609",storageBucket:"louvorapp-4f609.firebasestorage.app",messagingSenderId:"358727212611",appId:"1:358727212611:web:5f3ad0c5244df153067ef6"};
+    const app=initializeApp(firebaseConfig); const db=getDatabase(app); const auth=getAuth(app);
+    window.db=db; window.dbRef=ref; window.dbSet=set; window.dbRemove=remove; window.firebaseAuth=auth; window.firebaseSignIn=signInWithEmailAndPassword; window.firebaseSignOut=signOut;
+    let unsubReg=null,unsubMem=null;
 
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-
-    window.db = db;
-    window.dbRef = ref;
-    window.dbSet = set;
-    window.dbRemove = remove;
-
-    onValue(ref(db, 'registros_louvor'), (snapshot) => {
-      window.todosOsDados = snapshot.val() || {};
-      carregarChamadaDoDia();
-      carregarDashboard();
-    });
-
-    onValue(ref(db, 'membros_louvor'), (snapshot) => {
-      window.integrantesCadastrados = snapshot.val() || {};
-      renderizarListaCadastrados();
-      carregarDashboard();
+    function iniciarLeituras(){
+      if(unsubReg)unsubReg(); if(unsubMem)unsubMem();
+      unsubReg=onValue(ref(db,'registros_louvor'),s=>{window.todosOsDados=s.val()||{};carregarChamadaDoDia();carregarDashboard()},e=>mostrarErroBanco(e));
+      unsubMem=onValue(ref(db,'membros_louvor'),s=>{window.integrantesCadastrados=s.val()||{};renderizarListaCadastrados();carregarDashboard()},e=>mostrarErroBanco(e));
+    }
+    function mostrarErroBanco(e){console.error(e);const msg='Não foi possível acessar o Firebase. Confira login e regras do banco.';document.getElementById('lista-chamada').innerHTML='<div class="muted">'+msg+'</div>';}
+    onAuthStateChanged(auth,user=>{
+      window.usuarioAtual=user||null; window.isAdmin=!!user&&((user.email||'').toLowerCase()==='icmpinhos@gmail.com');
+      const overlay=document.getElementById('auth-overlay'),bar=document.getElementById('user-bar');
+      if(user){overlay.style.display='none';bar.style.display='flex';document.getElementById('user-info').textContent=(window.isAdmin?'Administrador • ':'Usuário • ')+(user.email||'');document.getElementById('admin-member-tools').style.display=window.isAdmin?'block':'none';document.getElementById('member-permission-note').style.display=window.isAdmin?'none':'block';iniciarLeituras();}
+      else{overlay.style.display='flex';bar.style.display='none';window.todosOsDados={};window.integrantesCadastrados={};if(unsubReg){unsubReg();unsubReg=null}if(unsubMem){unsubMem();unsubMem=null}}
     });
   </script>
 
   <script>
-    let statusSelecionado = 'presente';
-    let justificativaSelecionada = 'nao';
-    let tipoRelatorioAtual = 'diario';
-    window.todosOsDados = {};
-    window.integrantesCadastrados = {};
-
-    function alternarTema() {
-      const isDark = document.body.classList.toggle('dark-mode');
-      document.getElementById('theme-icon').innerText = isDark ? '☀️' : '🌙';
-      document.getElementById('theme-text').innerText = isDark ? 'Claro' : 'Escuro';
-      localStorage.setItem('louvor_theme', isDark ? 'dark' : 'light');
-    }
-
-    if (localStorage.getItem('louvor_theme') === 'dark') {
-      document.body.classList.add('dark-mode');
-      document.getElementById('theme-icon').innerText = '☀️';
-      document.getElementById('theme-text').innerText = 'Claro';
-    }
-
-    function alternarAba(nomeAba) {
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-
-      if(nomeAba === 'ensaio') {
-        document.querySelectorAll('.tab-btn')[0].classList.add('active');
-        document.getElementById('tab-ensaio').classList.add('active');
-      } else if(nomeAba === 'dashboard') {
-        document.querySelectorAll('.tab-btn')[1].classList.add('active');
-        document.getElementById('tab-dashboard').classList.add('active');
-        carregarDashboard();
-      } else {
-        document.querySelectorAll('.tab-btn')[2].classList.add('active');
-        document.getElementById('tab-membros').classList.add('active');
-      }
-    }
-
-    const inputData = document.getElementById('ensaio-data');
-    const hoje = new Date().toISOString().split('T')[0];
-    inputData.value = hoje;
-    document.getElementById('mes-relatorio').value = hoje.slice(0, 7);
-    document.getElementById('mes-dashboard').value = hoje.slice(0, 7);
-
-    function selecionarOpcao(status) {
-      statusSelecionado = status;
-      document.getElementById('lbl-p').className = 'status-btn ' + (status === 'presente' ? 'selected-p' : '');
-      document.getElementById('lbl-a').className = 'status-btn ' + (status === 'atrasado' ? 'selected-a' : '');
-      document.getElementById('lbl-f').className = 'status-btn ' + (status === 'ausente' ? 'selected-f' : '');
-
-      const boxJust = document.getElementById('box-justificativa');
-      if (status === 'atrasado' || status === 'ausente') {
-        boxJust.style.display = 'block';
-      } else {
-        boxJust.style.display = 'none';
-      }
-    }
-
-    function selecionarJustificativa(val) {
-      justificativaSelecionada = val;
-      const btnSim = document.getElementById('j-sim');
-      const btnNao = document.getElementById('j-nao');
-
-      if (val === 'sim') {
-        btnSim.className = 'just-btn selected-yes';
-        btnNao.className = 'just-btn';
-      } else {
-        btnSim.className = 'just-btn';
-        btnNao.className = 'just-btn selected-no';
-      }
-    }
-
-    function getListaMembrosCompleta() {
-      return Object.values(window.integrantesCadastrados).map(m => m.nome);
-    }
-
-    function buscarSugestoes() {
-      const termo = document.getElementById('input-busca').value.trim().toLowerCase();
-      const divSugestoes = document.getElementById('sugestoes');
-
-      if (!termo) { divSugestoes.style.display = 'none'; return; }
-
-      const lista = getListaMembrosCompleta();
-      const correspondencias = lista.filter(n => n.toLowerCase().includes(termo));
-
-      if (correspondencias.length > 0) {
-        divSugestoes.innerHTML = correspondencias.map(nome =>
-          `<div class="suggestion-item" onclick="selecionarSugestao('${nome}')">${nome}</div>`
-        ).join('');
-      } else {
-        divSugestoes.innerHTML = `<div class="suggestion-item" style="color:#888;">Cadastre o nome na aba "Membros"</div>`;
-      }
-      divSugestoes.style.display = 'block';
-    }
-
-    function selecionarSugestao(nome) {
-      document.getElementById('input-busca').value = nome;
-      document.getElementById('sugestoes').style.display = 'none';
-    }
-
-    function adicionarEAutoSalvar() {
-      const nome = document.getElementById('input-busca').value.trim();
-      const dataSel = inputData.value;
-      const motivo = document.getElementById('input-motivo').value.trim();
-
-      if (!nome) { alert('Selecione ou digite um nome.'); return; }
-
-      const chaveNome = nome.replace(/[.#$\[\]]/g, "_");
-      const dadosRegistro = {
-        nome: nome,
-        status: statusSelecionado,
-        justificado: (statusSelecionado !== 'presente') ? justificativaSelecionada : 'nao',
-        motivo: (statusSelecionado !== 'presente') ? motivo : ''
-      };
-
-      if (window.db && window.dbSet) {
-        window.dbSet(window.dbRef(window.db, `registros_louvor/${dataSel}/${chaveNome}`), dadosRegistro).then(() => {
-          document.getElementById('input-busca').value = '';
-          document.getElementById('input-motivo').value = '';
-          document.getElementById('sugestoes').style.display = 'none';
-        });
-      }
-    }
-
-    function removerDoFirebase(nome) {
-      const dataSel = inputData.value;
-      const chaveNome = nome.replace(/[.#$\[\]]/g, "_");
-      if (confirm(`Remover ${nome} da lista desta data?`)) {
-        window.dbRemove(window.dbRef(window.db, `registros_louvor/${dataSel}/${chaveNome}`));
-      }
-    }
-
-    function carregarChamadaDoDia() {
-      tipoRelatorioAtual = 'diario';
-      const dataSel = inputData.value;
-      const dataBr = dataSel.split('-').reverse().join('/');
-      const chamadaHoje = window.todosOsDados[dataSel] || {};
-
-      const divChamada = document.getElementById('lista-chamada');
-      const divFolha = document.getElementById('conteudo-folha');
-
-      let countP = 0, countA = 0, countF = 0;
-      const chaves = Object.keys(chamadaHoje);
-
-      if (chaves.length === 0) {
-        divChamada.innerHTML = '<p style="text-align: center; color: #888; font-size: 0.85rem;">Nenhum membro registrado para esta data.</p>';
-        divFolha.innerHTML = `<div class="paper-title">Relatório de Ensaio</div><p style="text-align:center; color:#888;">Sem registros para a data ${dataBr}.</p>`;
-      } else {
-        divChamada.innerHTML = '';
-
-        let htmlFolha = `<div class="paper-title">Relatório de Ensaio — ${dataBr}</div>`;
-        htmlFolha += `<table class="report-table"><thead><tr><th>Membro</th><th>Status</th><th>Detalhes</th></tr></thead><tbody>`;
-
-        chaves.forEach(k => {
-          const m = chamadaHoje[k];
-          let classeCard = 'card-p', classeTag = 'tag-p', textoTag = 'Presente', icone = '', rowClasse = 'class="row-presente"';
-          let tagJust = '';
-          let detalheTexto = '-';
-
-          if (m.status === 'presente') countP++;
-          if (m.status === 'atrasado') {
-            classeCard = 'card-a'; classeTag = 'tag-a'; textoTag = 'Atrasado'; rowClasse = 'class="row-atrasado"'; countA++;
-            if (m.justificado === 'sim') {
-              tagJust = `<span class="tag-just">Justif. Sim</span>`;
-              detalheTexto = `Atrasado (Justificado${m.motivo ? ': ' + m.motivo : ''})`;
-            } else {
-              detalheTexto = `Atrasado (Sem justificativa)`;
-            }
-          }
-          if (m.status === 'ausente') {
-            classeCard = 'card-f'; classeTag = 'tag-f'; textoTag = 'FALTOU'; rowClasse = 'class="row-ausente"'; icone = '⚠️ '; countF++;
-            if (m.justificado === 'sim') {
-              tagJust = `<span class="tag-just">Falta Justif.</span>`;
-              detalheTexto = `Faltou (Justificado${m.motivo ? ': ' + m.motivo : ''})`;
-            } else {
-              detalheTexto = `Faltou (Sem justificativa)`;
-            }
-          }
-
-          divChamada.innerHTML += `
-            <div class="member-card ${classeCard}">
-              <span>${icone}<strong>${m.nome}</strong></span>
-              <div>
-                <span class="tag-status ${classeTag}">${textoTag}</span> ${tagJust}
-                <button class="btn-del no-print" onclick="removerDoFirebase('${m.nome}')">✕</button>
-              </div>
-            </div>
-          `;
-
-          htmlFolha += `<tr ${rowClasse}><td>${m.nome}</td><td>${textoTag}</td><td>${detalheTexto}</td></tr>`;
-        });
-
-        htmlFolha += `</tbody></table>`;
-        htmlFolha += `<div style="margin-top:15px; font-size:0.83rem; text-align:right;">
-          <strong>Total:</strong> <span style="color:#155724;">Presentes: ${countP}</span> | <span style="color:#856404;">Atrasos: ${countA}</span> | <span style="color:#dc3545;">Faltas: ${countF}</span>
-        </div>`;
-
-        divFolha.innerHTML = htmlFolha;
-      }
-
-      document.getElementById('cnt-p').innerText = countP;
-      document.getElementById('cnt-a').innerText = countA;
-      document.getElementById('cnt-f').innerText = countF;
-    }
-
-    function gerarRelatorioMensal() {
-      tipoRelatorioAtual = 'mensal';
-      const mesSel = document.getElementById('mes-relatorio').value;
-      const divFolha = document.getElementById('conteudo-folha');
-
-      const datasDoMes = Object.keys(window.todosOsDados).filter(d => d.startsWith(mesSel));
-
-      if (datasDoMes.length === 0) {
-        divFolha.innerHTML = `<div class="paper-title">Resumo Mensal (${mesSel})</div><p style="text-align:center; color:#c00;">Sem registros para este mês.</p>`;
-        return;
-      }
-
-      const stats = {};
-      const listaMembros = getListaMembrosCompleta();
-      listaMembros.forEach(n => stats[n] = { p: 0, a: 0, f: 0, j: 0 });
-
-      datasDoMes.forEach(d => {
-        const registro = window.todosOsDados[d];
-        Object.values(registro).forEach(m => {
-          if (!stats[m.nome]) stats[m.nome] = { p: 0, a: 0, f: 0, j: 0 };
-          if (m.status === 'presente') stats[m.nome].p++;
-          if (m.status === 'atrasado') {
-            stats[m.nome].a++;
-            if (m.justificado === 'sim') stats[m.nome].j++;
-          }
-          if (m.status === 'ausente') {
-            stats[m.nome].f++;
-            if (m.justificado === 'sim') stats[m.nome].j++;
-          }
-        });
-      });
-
-      let html = `<div class="paper-title">Resumo Mensal de Presença — ${mesSel}</div>`;
-      html += `<p style="margin-bottom:10px; font-size:0.83rem;"><strong>Ensaios Realizados:</strong> ${datasDoMes.length}</p>`;
-      html += `<table class="report-table"><thead><tr><th>Nome</th><th>Presenças</th><th>Atrasos</th><th>Faltas</th><th>Justificadas</th></tr></thead><tbody>`;
-
-      Object.keys(stats).forEach(n => {
-        const { p, a, f, j } = stats[n];
-        let rowClasse = '';
-        if (f > 0) rowClasse = 'class="row-ausente"';
-        else if (a > 0) rowClasse = 'class="row-atrasado"';
-        else if (p > 0) rowClasse = 'class="row-presente"';
-
-        html += `<tr ${rowClasse}><td>${n}</td><td>${p}</td><td>${a}</td><td>${f}</td><td>${j}</td></tr>`;
-      });
-
-      html += `</tbody></table>`;
-      divFolha.innerHTML = html;
-    }
-
-    function carregarDashboard() {
-      const mesSel = document.getElementById('mes-dashboard').value;
-      const divDash = document.getElementById('conteudo-dashboard');
-      const datasDoMes = Object.keys(window.todosOsDados).filter(d => d.startsWith(mesSel));
-      const totalMembrosCadastrados = Object.keys(window.integrantesCadastrados).length;
-
-      if (datasDoMes.length === 0) {
-        divDash.innerHTML = `<p style="text-align:center; color:#888; padding:20px;">Nenhum ensaio registrado no mês de ${mesSel}.</p>`;
-        return;
-      }
-
-      let totalPresencas = 0, totalAtrasos = 0, totalFaltas = 0, totalJustificadas = 0;
-      const statsMembros = {};
-      const listaMembros = getListaMembrosCompleta();
-      listaMembros.forEach(n => statsMembros[n] = { p: 0, a: 0, f: 0, j: 0 });
-
-      datasDoMes.forEach(d => {
-        const registro = window.todosOsDados[d];
-        Object.values(registro).forEach(m => {
-          if (!statsMembros[m.nome]) statsMembros[m.nome] = { p: 0, a: 0, f: 0, j: 0 };
-          if (m.status === 'presente') { statsMembros[m.nome].p++; totalPresencas++; }
-          if (m.status === 'atrasado') { 
-            statsMembros[m.nome].a++; totalAtrasos++; 
-            if(m.justificado === 'sim') { statsMembros[m.nome].j++; totalJustificadas++; }
-          }
-          if (m.status === 'ausente') { 
-            statsMembros[m.nome].f++; totalFaltas++; 
-            if(m.justificado === 'sim') { statsMembros[m.nome].j++; totalJustificadas++; }
-          }
-        });
-      });
-
-      const totalRegistros = totalPresencas + totalAtrasos + totalFaltas;
-      const taxaPresencaGeral = totalRegistros > 0 ? ((totalPresencas + totalAtrasos) / totalRegistros * 100).toFixed(1) : 0;
-
-      let html = `
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:15px;">
-          <div style="background:var(--card-bg); padding:12px; border-radius:8px; border:1px solid var(--border-color); text-align:center;">
-            <div style="font-size:0.75rem; color:#888; font-weight:bold;">ENSAIOS NO MÊS</div>
-            <div style="font-size:1.4rem; font-weight:900; color:#000839;">${datasDoMes.length}</div>
-          </div>
-          <div style="background:var(--card-bg); padding:12px; border-radius:8px; border:1px solid var(--border-color); text-align:center;">
-            <div style="font-size:0.75rem; color:#888; font-weight:bold;">TAXA DE ASSIDUIDADE</div>
-            <div style="font-size:1.4rem; font-weight:900; color:#28a745;">${taxaPresencaGeral}%</div>
-          </div>
-        </div>
-
-        <div style="background:var(--card-bg); padding:10px; border-radius:8px; border:1px solid var(--border-color); margin-bottom:15px; font-size:0.85rem;">
-          <div>✅ Presenças: <strong>${totalPresencas}</strong></div>
-          <div>⏰ Atrasos: <strong>${totalAtrasos}</strong></div>
-          <div>❌ Faltas: <strong>${totalFaltas}</strong> (sendo ${totalJustificadas} justificadas)</div>
-        </div>
-
-        <h2>Frequência Individual (20 Integrantes)</h2>
-        <table class="report-table">
-          <thead>
-            <tr>
-              <th>Integrante</th>
-              <th>P</th>
-              <th>A</th>
-              <th>F</th>
-              <th>Justif.</th>
-            </tr>
-          </thead>
-          <tbody>
-      `;
-
-      Object.keys(statsMembros).forEach(n => {
-        const { p, a, f, j } = statsMembros[n];
-        let rowCor = '';
-        if (f > 2) rowCor = 'class="row-ausente"';
-        else if (f > 0) rowCor = 'class="row-atrasado"';
-
-        html += `<tr ${rowCor}><td>${n}</td><td>${p}</td><td>${a}</td><td>${f}</td><td>${j}</td></tr>`;
-      });
-
-      html += `</tbody></table>`;
-      divDash.innerHTML = html;
-    }
-
-    function gerarImagemECompartilhar() {
-      const folha = document.getElementById('folha-timbrada');
-
-      html2canvas(folha, { scale: 2 }).then(canvas => {
-        canvas.toBlob(blob => {
-          const nomeArquivo = `Relatorio_Louvor_ICM_${inputData.value}.png`;
-          const file = new File([blob], nomeArquivo, { type: 'image/png' });
-
-          if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-            navigator.share({
-              files: [file],
-              title: 'Relatório Louvor ICM Pinhos',
-              text: 'Segue o relatório de presença do ensaio.'
-            }).catch(() => {});
-          } else {
-            const link = document.createElement('a');
-            link.download = nomeArquivo;
-            link.href = URL.createObjectURL(blob);
-            link.click();
-            alert("Imagem gerada e baixada com sucesso!");
-          }
-        }, 'image/png');
-      });
-    }
-
-    function enviarTextoWhatsApp() {
-      const dataSel = inputData.value;
-      const dataBr = dataSel.split('-').reverse().join('/');
-
-      if (tipoRelatorioAtual === 'diario') {
-        const chamadaHoje = window.todosOsDados[dataSel] || {};
-        const lista = Object.values(chamadaHoje);
-        if (lista.length === 0) { alert('Não há registros na data selecionada.'); return; }
-
-        const presentes = lista.filter(m => m.status === 'presente');
-        const atrasados = lista.filter(m => m.status === 'atrasado');
-        const ausentes = lista.filter(m => m.status === 'ausente');
-
-        let msg = `*🎵 RELATÓRIO DE ENSAIO — ICM PINHOS*\n📅 *Data:* ${dataBr}\n\n`;
-        msg += `✅ *PRESENTES (${presentes.length}):*\n` + presentes.map(m => `• ${m.nome}`).join('\n');
-        
-        if (atrasados.length > 0) {
-          msg += `\n\n⏰ *ATRASADOS (${atrasados.length}):*\n` + atrasados.map(m => `• ${m.nome} ${m.justificado === 'sim' ? '(Justif.)' : ''}`).join('\n');
-        }
-        if (ausentes.length > 0) {
-          msg += `\n\n🚨 *AUSENTES (${ausentes.length}):*\n` + ausentes.map(m => `❌ ${m.nome} ${m.justificado === 'sim' ? '(Justif.)' : ''}`).join('\n');
-        }
-
-        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
-      } else {
-        const mesSel = document.getElementById('mes-relatorio').value;
-        const datasDoMes = Object.keys(window.todosOsDados).filter(d => d.startsWith(mesSel));
-        if (datasDoMes.length === 0) { alert('Sem dados registrados para este mês.'); return; }
-
-        const stats = {};
-        const listaMembros = getListaMembrosCompleta();
-        listaMembros.forEach(n => stats[n] = { p: 0, a: 0, f: 0, j: 0 });
-
-        datasDoMes.forEach(d => {
-          Object.values(window.todosOsDados[d]).forEach(m => {
-            if (!stats[m.nome]) stats[m.nome] = { p: 0, a: 0, f: 0, j: 0 };
-            if (m.status === 'presente') stats[m.nome].p++;
-            if (m.status === 'atrasado') { stats[m.nome].a++; if(m.justificado==='sim') stats[m.nome].j++; }
-            if (m.status === 'ausente') { stats[m.nome].f++; if(m.justificado==='sim') stats[m.nome].j++; }
-          });
-        });
-
-        let msg = `*📊 RESUMO MENSAL — ICM PINHOS (${mesSel})*\nTotal de Ensaios: ${datasDoMes.length}\n\n`;
-        Object.keys(stats).forEach(n => {
-          const { p, a, f, j } = stats[n];
-          if (p > 0 || a > 0 || f > 0) msg += `• *${n}*: P:${p} | A:${a} | ❌ F:${f} (Justif: ${j})\n`;
-        });
-
-        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
-      }
-    }
-
-    function cadastrarMembro() {
-      const nome = document.getElementById('novo-nome').value.trim();
-      if (!nome) { alert('Digite o nome do integrante!'); return; }
-
-      const id = nome.replace(/[.#$\[\]]/g, "_");
-      if (window.db && window.dbSet) {
-        window.dbSet(window.dbRef(window.db, `membros_louvor/${id}`), { nome: nome }).then(() => {
-          document.getElementById('novo-nome').value = '';
-        });
-      }
-    }
-
-    function removerMembroCadastrado(id, nome) {
-      if (confirm(`Deseja remover ${nome} do cadastro?`)) {
-        window.dbRemove(window.dbRef(window.db, `membros_louvor/${id}`));
-      }
-    }
-
-    function renderizarListaCadastrados() {
-      const div = document.getElementById('lista-membros-cadastrados');
-      const chaves = Object.keys(window.integrantesCadastrados);
-      document.getElementById('total-membros-badge').innerText = `Total: ${chaves.length}`;
-
-      if (chaves.length === 0) {
-        div.innerHTML = '<p style="color:#888; text-align:center; padding:10px;">Nenhum integrante cadastrado ainda.</p>';
-        return;
-      }
-
-      let html = '';
-      chaves.sort((a,b) => window.integrantesCadastrados[a].nome.localeCompare(window.integrantesCadastrados[b].nome));
-      chaves.forEach(k => {
-        const m = window.integrantesCadastrados[k];
-        html += `
-          <div class="member-manage-item">
-            <div class="member-manage-info">
-              <span class="member-manage-name">${m.nome}</span>
-            </div>
-            <button class="btn-del" onclick="removerMembroCadastrado('${k}', '${m.nome}')">✕ Excluir</button>
-          </div>
-        `;
-      });
-      div.innerHTML = html;
-    }
-
-    document.addEventListener('click', function(e) {
-      if (!e.target.closest('.search-container')) {
-        document.getElementById('sugestoes').style.display = 'none';
-      }
-    });
+    window.todosOsDados={}; window.integrantesCadastrados={}; window.usuarioAtual=null; window.isAdmin=false;
+    let statusSelecionado='presente',justificativaSelecionada='nao',tipoRelatorioAtual='diario';
+    const hoje=new Date().toISOString().slice(0,10); document.getElementById('ensaio-data').value=hoje; document.getElementById('mes-relatorio').value=hoje.slice(0,7); document.getElementById('mes-dashboard').value=hoje.slice(0,7);
+    if(localStorage.getItem('louvor_theme')==='dark')document.body.classList.add('dark-mode');
+
+    async function entrarNoApp(){const usuario=document.getElementById('login-usuario').value.trim();const senha=document.getElementById('login-senha').value;const erro=document.getElementById('login-erro');erro.textContent='';if(!usuario||!senha){erro.textContent='Informe usuário e senha.';return}const u=usuario.toLowerCase();const email=u==='admin'?'icmpinhos@gmail.com':(usuario.includes('@')?usuario:`${u}@frequencia-icm.app`);try{await window.firebaseSignIn(window.firebaseAuth,email,senha);document.getElementById('login-senha').value=''}catch(e){console.error(e);erro.textContent='Usuário ou senha inválidos.'}}
+    async function sairDoApp(){try{await window.firebaseSignOut(window.firebaseAuth)}catch(e){console.error(e)}}
+    function alternarTema(){const d=document.body.classList.toggle('dark-mode');localStorage.setItem('louvor_theme',d?'dark':'light')}
+    function alternarAba(nome,btn){document.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.tab-content').forEach(x=>x.classList.remove('active'));btn.classList.add('active');document.getElementById('tab-'+nome).classList.add('active');if(nome==='dashboard')carregarDashboard()}
+    function selecionarOpcao(s){statusSelecionado=s;['p','a','f'].forEach(x=>document.getElementById('lbl-'+x).className='status-btn');document.getElementById('lbl-'+(s==='presente'?'p':s==='atrasado'?'a':'f')).classList.add(s==='presente'?'selected-p':s==='atrasado'?'selected-a':'selected-f');document.getElementById('box-justificativa').style.display=s==='presente'?'none':'block'}
+    function selecionarJustificativa(v){justificativaSelecionada=v;document.getElementById('j-sim').classList.toggle('active',v==='sim');document.getElementById('j-nao').classList.toggle('active',v==='nao')}
+    function listaMembros(){return Object.values(window.integrantesCadastrados||{}).map(m=>m.nome).filter(Boolean).sort((a,b)=>a.localeCompare(b,'pt-BR'))}
+    function buscarSugestoes(){const termo=document.getElementById('input-busca').value.trim().toLowerCase(),box=document.getElementById('sugestoes');if(!termo){box.style.display='none';return}const arr=listaMembros().filter(n=>n.toLowerCase().includes(termo));box.innerHTML=arr.length?arr.map(n=>`<div class="suggestion" onclick='selecionarSugestao(${JSON.stringify(n)})'>${esc(n)}</div>`).join(''):'<div class="suggestion muted">Nenhum integrante encontrado.</div>';box.style.display='block'}
+    function selecionarSugestao(n){document.getElementById('input-busca').value=n;document.getElementById('sugestoes').style.display='none'}
+    function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+    function chaveNome(nome){return nome.replace(/[.#$\[\]]/g,'_')}
+    async function adicionarEAutoSalvar(){if(!window.usuarioAtual){alert('Faça login.');return}const nome=document.getElementById('input-busca').value.trim(),data=document.getElementById('ensaio-data').value,motivo=document.getElementById('input-motivo').value.trim();if(!nome||!data){alert('Informe nome e data.');return}try{await window.dbSet(window.dbRef(window.db,`registros_louvor/${data}/${chaveNome(nome)}`),{nome,status:statusSelecionado,justificado:statusSelecionado==='presente'?'nao':justificativaSelecionada,motivo:statusSelecionado==='presente'?'':motivo});document.getElementById('input-busca').value='';document.getElementById('input-motivo').value='';document.getElementById('sugestoes').style.display='none'}catch(e){console.error(e);alert('Não foi possível salvar. Verifique as permissões do Firebase.') }}
+    async function removerDoFirebase(nome){if(!confirm(`Remover ${nome} desta chamada?`))return;try{await window.dbRemove(window.dbRef(window.db,`registros_louvor/${document.getElementById('ensaio-data').value}/${chaveNome(nome)}`))}catch(e){alert('Não foi possível remover.')}}
+    function carregarChamadaDoDia(){tipoRelatorioAtual='diario';const data=document.getElementById('ensaio-data').value,obj=(window.todosOsDados||{})[data]||{},itens=Object.values(obj);let p=0,a=0,f=0;const lista=document.getElementById('lista-chamada');if(!window.usuarioAtual)return;if(!itens.length){lista.innerHTML='<div class="muted">Nenhum membro registrado para esta data.</div>';document.getElementById('conteudo-folha').innerHTML=`<div class="muted">Sem registros para ${formatData(data)}.</div>`}else{lista.innerHTML=itens.map(m=>{let c='card-p',t='Presente',tag='tag-p';if(m.status==='atrasado'){a++;c='card-a';t='Atrasado';tag='tag-a'}else if(m.status==='ausente'){f++;c='card-f';t='FALTOU';tag='tag-f'}else p++;return `<div class="member-card ${c}"><span><strong>${esc(m.nome)}</strong>${m.motivo?`<br><small>${esc(m.motivo)}</small>`:''}</span><div><span class="tag ${tag}">${t}</span><button class="del" onclick='removerDoFirebase(${JSON.stringify(m.nome)})'>✕</button></div></div>`}).join('');gerarFolhaDiaria(data,itens)}document.getElementById('cnt-p').textContent=p;document.getElementById('cnt-a').textContent=a;document.getElementById('cnt-f').textContent=f}
+    function gerarFolhaDiaria(data,itens){let p=0,a=0,f=0;let rows=itens.map(m=>{let t='Presente',cl='row-presente',det='-';if(m.status==='atrasado'){a++;t='Atrasado';cl='row-atrasado';det=m.justificado==='sim'?'Justificado'+(m.motivo?': '+m.motivo:''):'Sem justificativa'}else if(m.status==='ausente'){f++;t='Faltou';cl='row-ausente';det=m.justificado==='sim'?'Justificado'+(m.motivo?': '+m.motivo:''):'Sem justificativa'}else p++;return `<tr class="${cl}"><td>${esc(m.nome)}</td><td>${t}</td><td>${esc(det)}</td></tr>`}).join('');document.getElementById('conteudo-folha').innerHTML=`<div class="paper-title">Relatório de Ensaio — ${formatData(data)}</div><table class="report-table"><thead><tr><th>Membro</th><th>Status</th><th>Detalhes</th></tr></thead><tbody>${rows}</tbody></table><div style="text-align:right;margin-top:10px"><strong>P:</strong> ${p} | <strong>A:</strong> ${a} | <strong>F:</strong> ${f}</div>`}
+    function gerarRelatorioMensal(){tipoRelatorioAtual='mensal';const mes=document.getElementById('mes-relatorio').value,datas=Object.keys(window.todosOsDados||{}).filter(d=>d.startsWith(mes)).sort();if(!datas.length){document.getElementById('conteudo-folha').innerHTML='<div class="muted">Sem registros neste mês.</div>';return}let html=`<div class="paper-title">Relatório Mensal — ${mes.split('-').reverse().join('/')}</div>`;datas.forEach(d=>{const itens=Object.values(window.todosOsDados[d]||{});html+=`<h3 style="margin:12px 0 6px">${formatData(d)}</h3><table class="report-table"><thead><tr><th>Membro</th><th>Status</th></tr></thead><tbody>${itens.map(m=>`<tr><td>${esc(m.nome)}</td><td>${m.status==='presente'?'Presente':m.status==='atrasado'?'Atrasado':'Faltou'}</td></tr>`).join('')}</tbody></table>`});document.getElementById('conteudo-folha').innerHTML=html}
+    function carregarDashboard(){if(!window.usuarioAtual)return;const mes=document.getElementById('mes-dashboard').value,datas=Object.keys(window.todosOsDados||{}).filter(d=>d.startsWith(mes)),map={};datas.forEach(d=>Object.values(window.todosOsDados[d]||{}).forEach(m=>{map[m.nome]??={p:0,a:0,f:0};if(m.status==='presente')map[m.nome].p++;else if(m.status==='atrasado')map[m.nome].a++;else map[m.nome].f++}));const total=listaMembros().length;let pres=0,atr=0,fal=0;Object.values(map).forEach(x=>{pres+=x.p;atr+=x.a;fal+=x.f});let html=`<div class="dash-grid"><div class="dash-card"><strong>${datas.length}</strong>Chamadas</div><div class="dash-card"><strong>${total}</strong>Membros</div><div class="dash-card"><strong>${pres}</strong>Presenças</div></div>`;const nomes=Object.keys(map).sort((a,b)=>a.localeCompare(b,'pt-BR'));if(nomes.length)html+=`<table class="report-table"><thead><tr><th>Membro</th><th>P</th><th>A</th><th>F</th></tr></thead><tbody>${nomes.map(n=>`<tr><td>${esc(n)}</td><td>${map[n].p}</td><td>${map[n].a}</td><td>${map[n].f}</td></tr>`).join('')}</tbody></table>`;else html+='<div class="muted">Sem registros neste mês.</div>';document.getElementById('conteudo-dashboard').innerHTML=html}
+    async function cadastrarMembro(){if(!window.isAdmin){alert('Somente o administrador pode cadastrar integrantes.');return}const nome=document.getElementById('novo-nome').value.trim();if(!nome){alert('Digite o nome.');return}try{await window.dbSet(window.dbRef(window.db,`membros_louvor/${chaveNome(nome)}`),{nome});document.getElementById('novo-nome').value=''}catch(e){console.error(e);alert('Não foi possível cadastrar.')}}
+    async function removerMembro(nome){if(!window.isAdmin)return;if(!confirm(`Excluir ${nome} do cadastro? As chamadas antigas serão mantidas.`))return;try{await window.dbRemove(window.dbRef(window.db,`membros_louvor/${chaveNome(nome)}`))}catch(e){alert('Não foi possível excluir.')}}
+    function renderizarListaCadastrados(){const arr=listaMembros();document.getElementById('total-membros-badge').textContent=`(${arr.length})`;document.getElementById('lista-membros-cadastrados').innerHTML=arr.length?arr.map(n=>`<div class="manage-item"><strong>${esc(n)}</strong>${window.isAdmin?`<button class="del" onclick='removerMembro(${JSON.stringify(n)})'>✕</button>`:''}</div>`).join(''):'<div class="muted">Nenhum integrante cadastrado.</div>'}
+    function formatData(d){if(!d)return'';const [a,m,di]=d.split('-');return `${di}/${m}/${a}`}
+    async function gerarImagemECompartilhar(){const el=document.getElementById('folha-timbrada');try{const canvas=await html2canvas(el,{backgroundColor:'#fff',scale:2});canvas.toBlob(async blob=>{const file=new File([blob],'relatorio-louvor.png',{type:'image/png'});if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'Relatório Grupo de Louvor'})}else{const a=document.createElement('a');a.href=canvas.toDataURL('image/png');a.download='relatorio-louvor.png';a.click()}},'image/png')}catch(e){alert('Não foi possível gerar a imagem.')}}
+    function enviarTextoWhatsApp(){const data=document.getElementById('ensaio-data').value,itens=Object.values((window.todosOsDados||{})[data]||{});if(!itens.length){alert('Sem registros nesta data.');return}let txt=`*Grupo de Louvor - ICM PINHOS*\n*${formatData(data)}*\n\n`;itens.forEach(m=>txt+=`${m.status==='presente'?'✅':m.status==='atrasado'?'🟡':'❌'} ${m.nome} - ${m.status==='presente'?'Presente':m.status==='atrasado'?'Atrasado':'Faltou'}${m.motivo?' ('+m.motivo+')':''}\n`);window.open('https://wa.me/?text='+encodeURIComponent(txt),'_blank')}
   </script>
-
 </body>
 </html>
